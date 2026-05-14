@@ -30,7 +30,7 @@ export default function MemoryCard(modelValue: PropType) {
     return (
         <div className="flex flex-col justify-between bg-primary/30 min-w-[30%] max-w-[80%] min-h-[80%] max-h-[100%] overflow-auto text-center group w-fit shadow-lg rounded-md p-[10px]">
             <div className="flex items-center justify-end">
-                {modelValue.vocabularySourceWeb && <a href={modelValue.vocabularySourceWeb} target="_blank" className="underline mr-[10px] text-[#409EFF] text-[12px]">{$t('vocabulary_data_source')}</a>}
+                {modelValue.SourceWeb && <a href={modelValue.SourceWeb} target="_blank" className="underline mr-[10px] text-[#409EFF] text-[12px]">{$t('vocabulary_data_source')}</a>}
                 <span className="mr-[15px] cursor-pointer" onClick={handleViewBtn}>
                     { isview ? <SvgIcon width={20} name="viewIcon"/> : <SvgIcon width={20} name="noViewIcon"/> }
                 </span>

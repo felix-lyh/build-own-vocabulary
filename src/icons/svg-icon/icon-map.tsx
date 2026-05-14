@@ -16,12 +16,17 @@ import viewIcon from '../svg/view'
 import noViewIcon from '../svg/no-view'
 import upload from '../svg/upload'
 import edit from '../svg/edit'
+import completion from '../svg/completion';
+import circleMore from '../svg/circle-more';
+import more from '../svg/more';
 export const iconMap = {
     edit,
+    more,
     'not-pass': notPassIcon,
     'info-tips': infoTipsIcon,
     'voice-player':voicePlayer,
     'stop-voice':stopVoice,
+    'circle-more': circleMore,
     next: nextIcon,
     vocabulary: vocabularyIcon,
     listening: listeningIcon,
@@ -34,7 +39,8 @@ export const iconMap = {
     sendIcon,
     viewIcon,
     noViewIcon,
-    upload
+    upload,
+    completion,
 };
 
 export type IconName = keyof typeof iconMap;

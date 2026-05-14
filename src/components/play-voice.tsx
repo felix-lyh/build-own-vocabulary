@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { speakWithVoice, stopVoice } from '@/utils/tts'
+import { speakWithVoice } from '@/utils/tts'
 import SvgIcon from "@/icons/svg-icon";
 interface PropType {
     voiceValue:string;
@@ -9,12 +9,12 @@ interface PropType {
 export default function PlayVoice({voiceValue,needInitVoice = true,className = ''}:PropType) {
     const [isplayVoice, setPlayVoice] = useState(false)
     const controlVoicePlayer = async () => {
-        if (isplayVoice) {
-            stopVoice()
-            setPlayVoice(false)
-            return
-        }
-        await speakWithVoice(voiceValue, () => setPlayVoice(true), () => setPlayVoice(false))
+        // if (isplayVoice) {
+        //     stopVoice()
+        //     setPlayVoice(false)
+        //     return
+        // }
+        await speakWithVoice(voiceValue)
     }
     useEffect(()=>{
         if(needInitVoice){

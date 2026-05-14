@@ -6,22 +6,21 @@ import type { VocabularyDataType } from '@/type/vocabulary'
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     // console.log('searchParams',searchParams)
-    const {bookId, page,limit,type,vocabularySourceWeb } = Object.fromEntries(searchParams.entries());
-    const options = { page,limit }
-    const query = { bookId,type,vocabularySourceWeb }
-    Object.keys(query).forEach((item)=>{
+    const { bookId, chapterId, page, limit, SourceWeb, sort = 'createTime', sortBy = '-1' } = Object.fromEntries(searchParams.entries());
+    const options = { page, limit, sort, sortBy }
+    const query = { bookId, chapterId, SourceWeb }
+    Object.keys(query).forEach((item) => {
         const key = item as keyof typeof query
         if (!query[key]) {
             delete query[key]
         }
     })
-    // console.log('query',query)
     try {
-        const vocabulary = await paginate(db.vocabulary,options,query)
+        const vocabulary = await paginate(db.vocabulary, options, query)
         const response = NextResponse.json(vocabulary);
         return response;
     } catch (error) {
-        console.log('error',error)
+        console.log('error', error)
         return NextResponse.json({ error }, { status: 500 });
     }
 }
@@ -30,23 +29,24 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     try {
         const query = await req.json(); // 解析 JSON 資料
-        const { vocabulary, translations, examples,vocabularySourceWeb='',bookId,XPath} = query as VocabularyDataType;
+        const { bookId, chapterId, vocabulary, translations, examples, SourceWeb = '', XPath } = query as VocabularyDataType;
         const createTime = Date.now();
         // const reviewTime = Date.now();
-        const insertData:VocabularyDataType = {
+        const insertData: VocabularyDataType = {
             bookId,
+            chapterId,
             id: (new ObjectId).toString(),
-            vocabulary, 
-            translations, 
+            vocabulary,
+            translations,
             examples,
             createTime,
-            update:createTime,
-            reviewTime:createTime,
-            vocabularySourceWeb,
+            update: createTime,
+            reviewTime: createTime,
+            SourceWeb,
             XPath
         }
         await db.vocabulary.insertOne(insertData)
-        return NextResponse.json({ message: 'vocabulary saved successfully' }, { status: 200 });
+        return NextResponse.json({ payload: insertData, message: 'vocabulary saved successfully' }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: error }, { status: 400 });
     }
@@ -54,14 +54,14 @@ export async function POST(req: NextRequest) {
 // update a word
 export async function PUT(req: NextRequest) {
     try {
-        const query:VocabularyDataType = await req.json(); // 解析 JSON 資料
+        const query: VocabularyDataType = await req.json(); // 解析 JSON 資料
         const { id } = query;
-        if(!!id){
-            await db.vocabulary.updateOne({id},{$set: query})
-        }else{
+        if (!!id) {
+            await db.vocabulary.updateOne({ id }, { $set: {...query,update: Date.now()} })
+        } else {
             return NextResponse.json({ error: 'Invalid request there is no id' }, { status: 400 });
         }
-        return NextResponse.json({ message: 'vocabulary updated successfully' }, { status: 200 });
+        return NextResponse.json({ payload:query, message: 'vocabulary updated successfully' }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: 'Invalid request' }, { status: 500 });
     }
@@ -69,13 +69,13 @@ export async function PUT(req: NextRequest) {
 // delete vocabulary
 export async function DELETE(req: NextRequest) {
     try {
-        const query:{id?:string;idList?:string[]} = await req.json(); // 解析 JSON 資料
-        const { id,idList} = query;
-        if(!!id){
-            await db.vocabulary.deleteOne({id})
+        const query: { id?: string; idList?: string[] } = await req.json(); // 解析 JSON 資料
+        const { id, idList } = query;
+        if (!!id) {
+            await db.vocabulary.deleteOne({ id })
         }
-        if(!!idList){
-            await db.vocabulary.deleteMany({ id: { $in: idList }});
+        if (!!idList) {
+            await db.vocabulary.deleteMany({ id: { $in: idList } });
         }
         return NextResponse.json({ message: 'vocabulary delete successfully' }, { status: 200 });
     } catch (error) {

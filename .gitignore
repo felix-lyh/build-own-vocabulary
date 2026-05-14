@@ -41,3 +41,4 @@ yarn.lock
 package-lock.json
 
 local.*
+test

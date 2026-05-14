@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input"
 import { $t,isOneWord } from '@/utils/index'
 import { deleteOneVoca, updateVocabulary } from '@/request/vocabulary';
 interface PropType extends VocabularyDataType {
-    isEditSate: boolean;
+    isEditState: boolean;
     isChecked: boolean;
     onSelectChange: Function;
     onUpdateVacoList: Function
@@ -42,7 +42,7 @@ export default function VocabularyCard(props: PropType) {
         })
     }
     const handleDataSource = () => {
-        window.open(props.vocabularySourceWeb, '_blank')
+        window.open(props.SourceWeb, '_blank')
     }
     const handoutSidePronounce = () => {
         if (!exitWin || exitWin.closed) {
@@ -56,9 +56,9 @@ export default function VocabularyCard(props: PropType) {
         }
     }
     return (
-        <div className="w-[30%] min-w-[300px] bg-white mt-[10px] mr-[10px] rounded-md border border-gray-200 p-[10px] cursor-pointer overflow-hidden">
+        <div className="w-[30%] min-w-[300px] bg-white rounded-md border border-gray-200 p-[10px] cursor-pointer overflow-hidden">
             <div className='flex justify-between items-center mb-[6px]'>
-                {props.isEditSate && <Checkbox name={props.id} checked={props.isChecked} onCheckedChange={(event: boolean) => handleCheck(event, props.id)} />}
+                {props.isEditState && <Checkbox name={props.id} checked={props.isChecked} onCheckedChange={(event: boolean) => handleCheck(event, props.id)} />}
                 <Popover>
                     <PopoverTrigger asChild>
                         <span className='inline-block ml-auto leading-[10px] w-[30px] h-[30px] text-center text-[36px] hover:bg-theme hover:text-[#fff] rounded-[6px]'>...</span>
@@ -66,7 +66,7 @@ export default function VocabularyCard(props: PropType) {
                     <PopoverContent className="w-fit py-[6px] px-0">
                         <ul>
                             {
-                                props.vocabularySourceWeb && <li className='cursor-pointer px-[10px] hover:bg-theme hover:text-[#fff]' onClick={handleDataSource}>{$t('vocabulary_data_source')}</li>
+                                props.SourceWeb && <li className='cursor-pointer px-[10px] hover:bg-theme hover:text-[#fff]' onClick={handleDataSource}>{$t('vocabulary_data_source')}</li>
                             }
                             {
                                 isOneWord(props.vocabulary) && (

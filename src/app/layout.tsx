@@ -4,6 +4,8 @@ import "./globals.css";
 import '@/i18n'
 import { usePathname,useRouter } from 'next/navigation'
 import { $t } from '@/utils/index'
+import HeaderBar from "@/components/header-bar";
+import Logo from "@/components/logo";
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -24,27 +26,35 @@ export default function RootLayout({
 
     return (
         <html lang="en">
-            <body>
+            <body className="h-fit min-h-full">
                 <div className="flex bg-[#F5F5F5] h-[100%]">
-                    { routerList.includes(currentPath())? <ul className="px-[15px] py-[10px]">
-                        {
-                            routerList.map((item:RouterType)=>{
-                                return (
-                                    <li onClick={()=>toPage(item)} 
-                                    className={`${currentPath() === item ? 'text-theme':'text-[#333]'} flex flex-col items-center min-w-[70px] mt-[15px] cursor-pointer`} key={item}>
-                                        <span>{$t(item)}</span>
-                                        <SvgIcon
-                                            className="dark:invert self-center"
-                                            name={item}
-                                            width={30}
-                                            height={30}
-                                        />
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>:''}
-                    <div className="flex-1 p-[20px] overflow-auto">{children}</div>
+                    {   routerList.includes(currentPath()) &&
+                        <ul className="px-[15px] py-[10px] w-[16%] min-w-[200px] bg-white">
+                            <li className="mb-[35px]"><Logo></Logo></li>
+                            {
+                                routerList.map((item:RouterType)=>{
+                                    return (
+                                        <li onClick={()=>toPage(item)} 
+                                            className={`${currentPath() === item ? 'bg-[#F8F9FA] text-theme':'text-[#333]'} flex cursor-pointer items-center gap-3 px-3 py-2.5 rounded-lg font-manrope text-sm font-medium hover:bg-[#F8F9FA] hover:text-[#2EB7A3] transition-all duration-200`} key={item}>
+                                            <SvgIcon
+                                                className="dark:invert self-center"
+                                                name={item}
+                                                width={30}
+                                                height={30}
+                                            />
+                                            <span>{$t(item)}</span>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    }
+                    <div className="flex-1">
+                        {routerList.includes(currentPath()) && <HeaderBar leftContent={$t(currentPath())}></HeaderBar>}
+                        <div className={`${routerList.includes(currentPath()) && 'p-[20px]'}`}>
+                            {children}
+                        </div>
+                    </div>
                 </div>
             </body>
         </html>

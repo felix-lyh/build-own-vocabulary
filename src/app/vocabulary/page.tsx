@@ -1,37 +1,25 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { $t } from '@/utils/index';
-import { Button } from '@/components/ui/button';
-import { Input } from "@/components/ui/input"
 import SvgIcon from '@/icons/svg-icon';
-import type { VocabularyBookType } from '@/type/vocabularyBook'
-import { addBook, getBooks } from '@/request/book'
-import Link from 'next/link'
-import {
-    Dialog,
-    DialogContent,
-    DialogTrigger,
-    DialogDescription,
-    DialogClose,
-    DialogTitle
-} from "@/components/ui/dialog"
-
+import type { BookType } from '@/type/vocabularyBook'
+import { getBooks } from '@/request/book'
+import Link from 'next/link';
+import AddBookDialog from './components/add-book-dialog';
 export default function Page() {
     const [page, setPage] = useState(1)
-    const [open, setOpen] = useState(false)
-    const [bookList, setBookList] = useState<VocabularyBookType[]>([])
-    const [bookName,setBookName] = useState('')
-    const handleSubmit = (event: any) => {
-        if(!bookName) return
-        event.preventDefault();
-        addBook({ bookName }).then(() => {
-            setOpen(false)
-            getBookList()
-        })
+    const [bookVisible, setBookVisible] = useState(false)
+    const [bookList, setBookList] = useState<BookType[]>([])
+    const addBookCallBack = (data: BookType) => {
+        // if (!bookName) return
+        // addBook({ bookName }).then(() => {
+        //     setBookVisible(false)
+        //     getBookList()
+        // })
     }
     const getBookList = () => {
         getBooks({ limit: 0, page }).then((res: any) => {
-            let list = res?.data || []
+            let list = res?.payload || []
             setBookList(list)
         }).catch(err => {
 
@@ -47,39 +35,17 @@ export default function Page() {
                     <h1>{$t('vocabulary.page.header')}</h1>
                     <p>{$t('vocabulary.page.header_desc')}</p>
                 </div>
-                <Dialog open={open} onOpenChange={(value)=>setOpen(value)}>
-                    <DialogTrigger>
-                        <div onClick={()=>setOpen(true)} className='flex items-center bg-primary rounded-md text-[#fff] py-[8px] px-[10px]'>
-                            <SvgIcon width={16} height={16} name='addFile' color='#fff'></SvgIcon>
-                            <span className='ml-[10px]'>{$t('add_vocabulary_book')}</span>
-                        </div>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogTitle></DialogTitle>
-                        <DialogDescription></DialogDescription>
-                        <form onSubmit={handleSubmit}>
-                            <div className='flex items-center mt-[20px]'>
-                                <label>{$t('add_book.name')}</label>
-                                <Input value={bookName} onChange={(e: any) =>
-                                    setBookName(e.target.value)
-                                } className='flex-1 ml-[15px]' placeholder={$t('add_book.name')}></Input>
-                            </div>
-                            <div className='flex justify-end mt-[20px]'>
-                                <DialogClose asChild>
-                                    <Button onClick={()=>setOpen(false)} type="button">{$t('common.close')}</Button>
-                                </DialogClose>
-                                <Button className='ml-[20px]' disabled={!bookName} type='submit'>{$t('common.save')}</Button>
-                            </div>
-                        </form>
-                    </DialogContent>
-                </Dialog>
+                <div onClick={() => setBookVisible(true)} className='flex items-center cursor-pointer bg-primary rounded-lg text-[#fff] h-fit py-[8px] px-[10px]'>
+                    <SvgIcon width={16} height={16} name='addFile' color='#fff'></SvgIcon>
+                    <span className='ml-[10px]'>{$t('add_vocabulary_book')}</span>
+                </div>
             </div>
             <div className='mt-[15px] h-full'>
                 {
                     bookList.length ?
                         <ul className='flex flex-wrap'>
                             {bookList.map(book =>
-                                <div key={book.bookId} className="flex gap-8 cursor-pointer">
+                                <div key={book.bookId} className="flex mt-[15px] gap-8 cursor-pointer">
                                     <Link href={`/vocabulary/${book.bookId}`} className="block">
                                         <div className="group relative h-60 w-52 [perspective:1000px] text-[#fff] text-2xl" >
                                             <div className="absolute inset-0 h-full w-48 rounded-lg bg-primary shadow-md"></div>
@@ -99,11 +65,20 @@ export default function Page() {
                                 </div>)}
                         </ul>
                         :
-                        <div className='text-[20px] text-center mt-[25px]'>
-                            {$t('vocabulary_book_empty')}
+                        <div onClick={() => setBookVisible(true)} className="group mt-[65px] bg-white/50 border-2 border-dashed border-[#E9ECEF] rounded-xl flex flex-col items-center justify-center p-8 text-center hover:bg-[#E6F6F4]/20 hover:border-[#2EB7A3] transition-all cursor-pointer">
+                            <div className="w-16 h-16 rounded-full bg-[#E6F6F4] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                <SvgIcon width={32} height={326} name='addFile' color='#2EB7A3'></SvgIcon>
+                            </div>
+                            <h3 className="text-headline-lg font-headline-lg text-on-surface mb-2">{$t('add_vocabulary_book')}</h3>
+                            <p className="text-on-surface-variant text-label-md font-label-md">{$t('add_vocabulary_book_desc')}</p>
                         </div>
                 }
             </div>
+            <AddBookDialog 
+            dialogVisible={bookVisible} 
+            callbackData={addBookCallBack} 
+            handleDialogVisible={(value: boolean) => setBookVisible(value)}>
+            </AddBookDialog>
         </div>
     )
 }

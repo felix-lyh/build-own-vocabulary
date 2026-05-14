@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import MemoryCard from '@/app/vocabulary/[bookId]/components/memory-card';
+import MemoryCard from '@/app/vocabulary/components/memory-card';
 import InitBlock from '@/components/init-block';
 import { useVocabularyStore } from '@/store/vocabulary';
 import { useParams } from 'next/navigation'

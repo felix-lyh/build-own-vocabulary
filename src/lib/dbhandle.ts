@@ -2,11 +2,12 @@ import type { Collection,Document} from 'mongodb';
 interface PaginateOptions {
     page?: number|string;
     limit?: number|string;
-    sort?: Record<string, 1 | -1>;
+    sort?: string;
+    sortBy?: string;
 }
 
 interface PaginateResult {
-    data: any[];
+    payload: any[];
     total: number;
     page: number;
     limit: number;
@@ -24,11 +25,11 @@ export async function paginate(
     options: PaginateOptions = {},
     query: Document = {},
 ): Promise<PaginateResult> {
-    const { page = 1, limit = 0, sort = { _id: -1 } } = options;
+    const { page = 1, limit = 0, sort = 'createTime', sortBy = '-1' } = options;
     let pageSize = Number(page)
     let pageLimit = Number(limit)
     const skip = (pageSize - 1) * pageLimit;
-    const cursor = collectionName.find(query).sort(sort);
+    const cursor = collectionName.find(query).sort({ [sort]: sortBy === '-1' ? -1 : 1 });
     if (pageLimit > 0) {
         cursor.skip(skip).limit(pageLimit);
     }
@@ -40,7 +41,7 @@ export async function paginate(
     const totalPages = pageLimit > 0 ? Math.ceil(total / pageLimit) : (total > 0 ? 1 : 0);
 
     return {
-        data,
+        payload:data,
         total,
         page:pageSize,
         limit:pageLimit,

@@ -24,7 +24,6 @@ export default function Page() {
     }
     return (
         <div>
-
             <div className='flex justify-between'>
                 <div>
                     <h1>{$t('wirte_practice.header')}</h1>
@@ -59,7 +58,6 @@ export default function Page() {
             </div>
             <div className=''>
                 <ul className='flex '>
-                    <li>reading</li>
                 </ul>
             </div>
             <div className="">

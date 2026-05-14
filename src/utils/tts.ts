@@ -1,4 +1,7 @@
 "use client";
+
+// import axios from "axios";
+
 export function getVoicesAsync() {
     return new Promise((resolve) => {
         let voices = speechSynthesis.getVoices();
@@ -36,3 +39,20 @@ export async function speakWithVoice(text: string, onStart?: () => void, onEnd?:
 export function stopVoice() {
     speechSynthesis.cancel();
 }
+
+// https://dict.youdao.com/pronounce/base
+// export async function speakWithVoice(text: string, onStart?: () => void, onEnd?: () => void, voiceName = 'Samantha') {
+//     axios.get('https://dict.youdao.com/pronounce/base',{
+//         params: {
+//             audio: text,
+//             type: '2'
+//         },
+//         responseType: 'blob'
+//     }).then((response) => {
+//         const audioUrl = URL.createObjectURL(response.data);
+//         const audio = new Audio(audioUrl);
+//         audio.play();
+//     }).catch((error) => {
+//         console.error('Error fetching audio:', error);
+//     });
+// }
