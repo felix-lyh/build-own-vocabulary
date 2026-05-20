@@ -29,14 +29,11 @@ export default function Page() {
         getBookList()
     }, [])
     return (
-        <div>
+        <>
             <div className='flex justify-between'>
-                <div>
-                    <h1>{$t('vocabulary.page.header')}</h1>
-                    <p>{$t('vocabulary.page.header_desc')}</p>
-                </div>
+                <h3>{$t('vocabulary.page.header_desc')}</h3>
                 <div onClick={() => setBookVisible(true)} className='flex items-center cursor-pointer bg-primary rounded-lg text-[#fff] h-fit py-[8px] px-[10px]'>
-                    <SvgIcon width={16} height={16} name='addFile' color='#fff'></SvgIcon>
+                    <SvgIcon width={20} height={20} name='vocabulary' color='#fff'></SvgIcon>
                     <span className='ml-[10px]'>{$t('add_vocabulary_book')}</span>
                 </div>
             </div>
@@ -79,6 +76,6 @@ export default function Page() {
             callbackData={addBookCallBack} 
             handleDialogVisible={(value: boolean) => setBookVisible(value)}>
             </AddBookDialog>
-        </div>
+        </>
     )
 }

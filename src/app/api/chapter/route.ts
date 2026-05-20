@@ -9,9 +9,9 @@ const collection = db[collectionName]
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     // console.log('searchParams',searchParams)
-    const { page,limit } = Object.fromEntries(searchParams.entries());
+    const { page,limit,bookId } = Object.fromEntries(searchParams.entries());
     const options = { page,limit }
-    const query = {  }
+    const query = { bookId }
     try {
         const vocabulary = await paginate(collection,options,query)
         const response = NextResponse.json(vocabulary);
@@ -60,16 +60,18 @@ export async function PUT(req: NextRequest) {
 // delete chapter
 export async function DELETE(req: NextRequest) {
     try {
-        const query:{id?:string;idList?:string[]} = await req.json(); // 解析 JSON 資料
-        const { id,idList} = query;
-        if(!!id){
-            await collection.deleteOne({id})
+        const query:{chapterId?:string;chapterIdList?:string[]} = await req.json(); // 解析 JSON 資料
+        const { chapterId,chapterIdList} = query;
+        if(!!chapterId){
+            await collection.deleteOne({chapterId})
+            await db.vocabulary.deleteMany({chapterId})
         }
-        if(!!idList){
-            await collection.deleteMany({ id: { $in: idList }});
+        if(!!chapterIdList){
+            await collection.deleteMany({ id: { $in: chapterIdList }});
+            await db.vocabulary.deleteMany({ id: { $in: chapterIdList }});
         }
         return NextResponse.json({ message: 'vocabulary delete successfully' }, { status: 200 });
     } catch (error) {
-        return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+        return NextResponse.json({ error,message: 'Invalid request' }, { status: 400 });
     }
 }

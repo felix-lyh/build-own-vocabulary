@@ -7,6 +7,4 @@ export interface BookChapterType {
     update:number;
 }
 
-export type AddChapterType = Pick<BookChapterType,"bookId"|"chapterName"|"chapterDesc">
-
-export type UpdateChapterType = Omit<BookChapterType,"createTime"|"update">
+export type UpsertChapterType = Pick<BookChapterType,"bookId"|"chapterName"|"chapterDesc">

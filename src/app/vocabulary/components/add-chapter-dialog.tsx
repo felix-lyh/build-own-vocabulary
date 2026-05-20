@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import type { BookChapterType,AddChapterType } from '@/type/chapter'
+import type { BookChapterType,UpsertChapterType } from '@/type/chapter'
 import { addChapter } from '@/request/chapter'
 import { $t } from '@/utils/index';
 

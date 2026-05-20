@@ -1,28 +1,19 @@
 'use client'
-
 import { useState } from "react";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { $t } from '@/utils/index'
-import OutputMode from "./output-mode";
-import TrainingMode from "./training-mode";
+import SvgIcon from '@/icons/svg-icon';
 
 export default function Page() {
-    const [outputMode, setOutputMode] = useState(true);
+    const [bookVisible, setBookVisible] = useState(false)
     return (
         <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between mb-[30px]">
-                <div>
-                    <h1>{ outputMode ? $t('wirte_practice.training'):$t('wirte_practice.output') }</h1>
-                    <p>{outputMode ? $t('wirte_practice.training.desc'):$t('wirte_practice.output.desc') }</p>
-                </div>
-                <div className='flex items-center'>
-                    <Label htmlFor="memory-mode">{$t('wirte_practice.output')}</Label>
-                    <Switch className='mx-[10px]' id="memory-mode" checked={outputMode} onCheckedChange={setOutputMode} />
-                    <Label htmlFor="browse-mode">{$t('wirte_practice.training')}</Label>
+            <div className='flex justify-between'>
+                <h3>{$t('writing.page.header_desc')}</h3>
+                <div onClick={() => setBookVisible(true)} className='flex items-center cursor-pointer bg-primary rounded-lg text-[#fff] h-fit py-[8px] px-[10px]'>
+                    <SvgIcon width={20} height={20} name='vocabulary' color='#fff'></SvgIcon>
+                    <span className='ml-[10px]'>{$t('add_vocabulary_book')}</span>
                 </div>
             </div>
-            {outputMode ? <TrainingMode/> : <OutputMode/>}
         </div>
     );
 }

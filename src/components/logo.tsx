@@ -1,7 +1,8 @@
-
-export default function Logo() {
+import { useRouter } from 'next/navigation'
+export default function Logo({className}:{className?:string}) {
+    const router = useRouter();
     return (
-        <div className="text-[#2EB7A3] font-extrabold text-lg font-headline-lg">
+        <div onClick={() => router.push('/')} className={`text-[#2EB7A3] cursor-pointer font-extrabold text-lg font-headline-lg ${className}`}>
             LexisFlow
         </div>
     );

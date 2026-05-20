@@ -1,14 +1,14 @@
 import request from './index';
-import type { BookChapterType,AddChapterType } from '@/type/chapter'
+import type { BookChapterType,UpsertChapterType } from '@/type/chapter'
 export const getChapters = ({bookId,limit=0,page=1}:{bookId:string,limit:number,page:number}) => {
     return request({
         url: '/api/chapter',
         method: 'get',
-        data: { bookId,limit, page },
+        params: { bookId,limit, page },
     });
 };
 
-export const addChapter = ({ bookId,chapterName,chapterDesc }:AddChapterType) => {
+export const addChapter = ({ bookId,chapterName,chapterDesc }:UpsertChapterType) => {
     return request({
         url: '/api/chapter',
         method: 'post',

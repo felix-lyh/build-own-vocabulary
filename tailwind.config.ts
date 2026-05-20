@@ -1,3 +1,4 @@
+import { warn } from "console";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -29,6 +30,18 @@ export default {
     				DEFAULT: 'hsl(var(--secondary))',
     				foreground: 'hsl(var(--secondary-foreground))'
     			},
+                success:{
+                    DEFAULT: '#2ECC71',
+                    foreground: '#fff'
+                },
+                danger:{
+                    DEFAULT: '#E74C3C',
+                    foreground: '#fff'
+                },
+                warning: {
+                    DEFAULT: '#F39C12',
+                    foreground: '#fff'
+                },
     			muted: {
     				DEFAULT: 'hsl(var(--muted))',
     				foreground: 'hsl(var(--muted-foreground))'

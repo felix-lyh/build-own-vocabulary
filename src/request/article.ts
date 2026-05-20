@@ -1,31 +1,47 @@
 import request from './index';
+import type { UpsertArticleItemType,UpsertAreticleType } from '@/type/article'
+export const getArticleList = ({limit=0,page=1}:{limit:number,page:number}) => {
+    return request({
+        url: '/api/articleList',
+        method: 'get',
+        params: { limit, page }
+    });
+}
 
-export const addArticles = ({ text }: { text: string }) => {
+export const addArticleListItem = ({ articleName,articleDesc }: UpsertArticleItemType) => {
     return request({
-        url: '/api/article',
+        url: '/api/articleList',
         method: 'post',
-        data: { text },
+        data: { articleName,articleDesc },
     });
 };
-export const updateArticles = ({ id, text }: { id: string, text: string }) => {
+export const updateArticleListItem = ({ articleId,articleName,articleDesc }: UpsertArticleItemType) => {
     return request({
-        url: `/api/article/${id}`,
+        url: '/api/articleList',
         method: 'put',
-        data: { text },
+        data: { articleId,articleName,articleDesc }
     });
 };
-// export const getWords = ({ page=1, limit=100}:{ page?:number, limit?:number,sort?:string }) => {
-//     return new Promise(async (resolve,reject)=>{
-//         try {
-//             const result = await apiFetch('/api/words', {
-//                 method: 'get',
-//                 body: { page, limit }
-//             });
-//             resolve(result)
-//             console.log('成功新增:', result);
-//         } catch (error) {
-//             reject(error)
-//             console.error('新增失敗:', error);
-//         }
-//     })
-// };
+
+export const getArticle = (articleId:string)=>{
+    return request({
+        url: `/api/articleList/${articleId}`,
+        method: 'get'
+    });
+}
+
+export const addArticle = ({articleId,content}:UpsertAreticleType)=>{
+    return request({
+        url: `/api/articleList/${articleId}`,
+        method: 'post',
+        data: { articleId,content }
+    });
+}
+
+export const updateArticle = ({articleId,content}:UpsertAreticleType)=>{
+    return request({
+        url: `/api/articleList/${articleId}`,
+        method: 'put',
+        data: { articleId,content }
+    });
+}

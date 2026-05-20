@@ -2,66 +2,54 @@
 import SvgIcon from '@/icons/svg-icon';
 import { useEffect, useState } from 'react';
 import { $t } from '@/utils/index';
-import { Button } from '@/components/ui/button';
-import { Input } from "@/components/ui/input"
-import {
-    Dialog,
-    DialogContent,
-    DialogTrigger,
-    DialogDescription,
-    DialogClose,
-    DialogTitle
-} from "@/components/ui/dialog";
+import UpsertArticleItem from './components/upsert-articleItem-dialog';
+import { getArticleList } from '@/request/article';
+import { ArticleItemType } from '@/type/article';
+import { useRouter } from 'next/navigation'
 export default function Page() {
-    const [open, setOpen] = useState(false)
-    const handleSubmit = (event: any) => {
-        // if(!bookName) return
-        event.preventDefault();
-        // addBook({ bookName }).then(() => {
-        //     setOpen(false)
-        //     getBookList()
-        // })
+    const [articleVisible, setArticleVisible] = useState(false)
+    const [articleList, setArticleList] = useState<ArticleItemType[]>([])
+    const router = useRouter()
+    const updateArticleList = (data?:ArticleItemType) => {
+        if(!!data){
+            setArticleList([...articleList, data])
+            return
+        }
+        getArticleList({limit:0,page:1}).then((res: any) => {
+            let articleList = res?.payload || []
+            setArticleList(articleList)
+        }).catch((err: any) => {
+
+        })
     }
+    useEffect(() => {
+        updateArticleList()
+    }, [])
     return (
-        <div>
+        <>
             <div className='flex justify-between'>
-                <div>
-                    <h1>{$t('wirte_practice.header')}</h1>
-                    <p>{$t('wirte_practice.header_desc')}</p>
+                <h3>{$t('reading_practice.header_desc')}</h3>
+                <div onClick={() => setArticleVisible(true)} className='flex items-center cursor-pointer bg-primary rounded-lg text-[#fff] h-fit py-[8px] px-[10px]'>
+                    <SvgIcon width={20} height={20} name='reading' color='#fff'></SvgIcon>
+                    <span className='ml-[10px]'>{$t('add_article')}</span>
                 </div>
-                <Dialog open={open} onOpenChange={(value)=>setOpen(value)}>
-                    <DialogTrigger>
-                        <div onClick={() => setOpen(true)} className='flex items-center bg-primary rounded-md text-[#fff] py-[8px] px-[10px]'>
-                            <SvgIcon width={16} height={16} name='addFile' color='#fff'></SvgIcon>
-                            <span className='ml-[10px]'>{$t('add_article')}</span>
-                        </div>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogTitle></DialogTitle>
-                        <DialogDescription></DialogDescription>
-                        <form onSubmit={handleSubmit}>
-                            {/* <div className='flex items-center mt-[20px]'>
-                                <label>{$t('add_book.name')}</label>
-                                <Input value={bookName} onChange={(e: any) =>
-                                    setBookName(e.target.value)
-                                } className='flex-1 ml-[15px]' placeholder={$t('add_book.name')}></Input>
-                            </div>
-                            <div className='flex justify-end mt-[20px]'>
-                                <DialogClose asChild>
-                                    <Button onClick={()=>setOpen(false)} type="button">{$t('common.close')}</Button>
-                                </DialogClose>
-                                <Button className='ml-[20px]' disabled={!bookName} type='submit'>{$t('common.save')}</Button>
-                            </div> */}
-                        </form>
-                    </DialogContent>
-                </Dialog>
             </div>
-            <div className=''>
-                <ul className='flex '>
+            
+            <div className="">
+                <ul>
+                    {articleList.map((item: ArticleItemType) => (
+                        <li key={item.articleId} className='px-[20px] py-[10px] mt-[20px] rounded-lg bg-white'>
+                            <h2 onClick={()=>router.push(`/reading/${item.articleId}`)} className='text-xl mb-[10px] font-bold hover:underline cursor-pointer'>{item.articleName}</h2>
+                            <p>{item.articleDesc}</p>
+                        </li>
+                    ))}
                 </ul>
             </div>
-            <div className="">
-            </div>
-        </div>
+            <UpsertArticleItem 
+                dialogVisible={articleVisible} 
+                handleDialogVisible={setArticleVisible} 
+                callbackData={updateArticleList}>
+            </UpsertArticleItem>
+        </>
     );
 }
