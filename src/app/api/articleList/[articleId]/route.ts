@@ -1,6 +1,6 @@
 import db from '@/lib/mongodb';
 import { NextRequest, NextResponse } from 'next/server';
-import type { AreticleType,UpsertArticleItemType,UpsertAreticleType } from '@/type/article'
+import type { AreticleType,UpsertAreticleType } from '@/type/article'
 
 const collectionName = 'article'
 const collection = db[collectionName]
