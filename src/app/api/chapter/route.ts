@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { paginate } from '@/lib/dbhandle';
 import type { BookChapterType } from '@/type/chapter'
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 // const collectionName = 'chapter'
 // const db.chapter = db[collectionName]
 export async function GET(req: NextRequest) {

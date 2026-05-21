@@ -6,6 +6,7 @@ import { paginate } from '@/lib/dbhandle';
 import type { BookType } from '@/type/vocabularyBook'
 import type { BookChapterType } from '@/type/chapter'
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     // console.log('searchParams',searchParams)
