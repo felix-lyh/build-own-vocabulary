@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
             },
         ];
     },
+    typescript: {
+        ignoreBuildErrors: false,
+    },
     // i18n: {
     //     locales: ['en', 'zh'], // your supported locales
     //     defaultLocale: 'en',   // fallback locale
