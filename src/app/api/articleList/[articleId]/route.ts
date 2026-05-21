@@ -1,11 +1,12 @@
+export const dynamic = 'force-dynamic';
 import db from '@/lib/mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 import type { AreticleType,UpsertAreticleType } from '@/type/article'
 
-export const dynamic = 'force-dynamic';
+
 // const collectionName = 'article'
 // const db.article = db[collectionName]
-export async function GET(_: NextRequest,{ params }: { params: Promise<{ articleId: string }>}) {
+export async function GET(_: NextRequest) {
     // try {
     //     const { articleId } = await params;
         
