@@ -2,17 +2,18 @@ import db from '@/lib/mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 import type { AreticleType,UpsertAreticleType } from '@/type/article'
 
+export const dynamic = 'force-dynamic';
 // const collectionName = 'article'
 // const db.article = db[collectionName]
 export async function GET(_: NextRequest,{ params }: { params: Promise<{ articleId: string }>}) {
-    try {
-        const { articleId } = await params;
+    // try {
+    //     const { articleId } = await params;
         
-        const article = await db.article.findOne({articleId});
-        return NextResponse.json({payload:article, message: 'Article found successfully' }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
-    }
+    //     const article = await db.article.findOne({articleId});
+    //     return NextResponse.json({payload:article, message: 'Article found successfully' }, { status: 200 });
+    // } catch (error) {
+    //     return NextResponse.json({ error }, { status: 500 });
+    // }
 }
 
 
