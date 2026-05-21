@@ -1,10 +1,10 @@
-export const dynamic = 'force-dynamic';
+
 import db from '@/lib/mongodb';
 import { ObjectId } from 'mongodb'
 import { NextRequest, NextResponse } from 'next/server';
 import { paginate } from '@/lib/dbhandle';
 import type { BookChapterType } from '@/type/chapter'
-
+export const dynamic = 'force-dynamic';
 // const collectionName = 'chapter'
 // const db.chapter = db[collectionName]
 export async function GET(req: NextRequest) {

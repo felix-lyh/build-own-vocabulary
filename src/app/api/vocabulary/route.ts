@@ -1,9 +1,11 @@
-export const dynamic = 'force-dynamic';
+
 import db from '@/lib/mongodb';
 import { ObjectId } from 'mongodb'
 import { NextRequest, NextResponse } from 'next/server';
 import { paginate } from '@/lib/dbhandle';
 import type { VocabularyDataType } from '@/type/vocabulary'
+
+export const dynamic = 'force-dynamic';
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     // console.log('searchParams',searchParams)
