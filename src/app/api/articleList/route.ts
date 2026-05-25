@@ -1,5 +1,5 @@
 
-import db from '@/lib/mongodb';
+import { getDbPool } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb'
 import { NextRequest, NextResponse } from 'next/server';
 import { paginate } from '@/lib/dbhandle';
@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
     const options = { page,limit }
     const query = {  }
     try {
+        const db = await getDbPool();
         const articleList = await paginate(db.articleList,options,query)
         const response = NextResponse.json(articleList);
         return response;
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
             createTime:createTime, // Date.now
             update:createTime
         }     
+        const db = await getDbPool();
         await db.articleList.insertOne(insertData)
         await db.article.insertOne(insertData)
         return NextResponse.json({ payload:insertData, message: 'ArticleItem saved successfully' }, { status: 200 });
@@ -49,6 +51,7 @@ export async function PUT(req: NextRequest) {
         const query:UpsertArticleItemType = await req.json(); // 解析 JSON 資料
         const { articleId,articleName,articleDesc } = query;
         if(!!articleId){
+            const db = await getDbPool();
             await db.articleList.updateOne({articleId},{$set: {articleName,articleDesc,update:Date.now()}})
         }else{
             return NextResponse.json({ error: 'Invalid request there is no id' }, { status: 400 });
@@ -63,6 +66,7 @@ export async function DELETE(req: NextRequest) {
     try {
         const query:{id?:string;idList?:string[]} = await req.json(); // 解析 JSON 資料
         const { id,idList} = query;
+        const db = await getDbPool();
         if(!!id){
             await db.articleList.deleteOne({id})
         }

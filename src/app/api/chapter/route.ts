@@ -1,5 +1,5 @@
 
-import db from '@/lib/mongodb';
+import { getDbPool } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb'
 import { NextRequest, NextResponse } from 'next/server';
 import { paginate } from '@/lib/dbhandle';
@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
     const options = { page,limit }
     const query = { bookId }
     try {
+        const db = await getDbPool();
         const vocabulary = await paginate(db.chapter,options,query)
         const response = NextResponse.json(vocabulary);
         return response;
@@ -38,6 +39,7 @@ export async function POST(req: NextRequest) {
             createTime:createTime, // Date.now
             update:createTime
         }
+        const db = await getDbPool();
         await db.chapter.insertOne(insertData)
         return NextResponse.json({ payload:insertData, message: 'chapter saved successfully' }, { status: 200 });
     } catch (error) {
@@ -50,6 +52,7 @@ export async function PUT(req: NextRequest) {
         const query:BookChapterType = await req.json(); // 解析 JSON 資料
         const { bookId,chapterId } = query;
         if(!!chapterId){
+            const db = await getDbPool();
             await db.chapter.updateOne({bookId,chapterId},{$set: {...query,update:Date.now()}})
         }else{
             return NextResponse.json({ error: 'Invalid request there is no id' }, { status: 400 });
@@ -64,6 +67,7 @@ export async function DELETE(req: NextRequest) {
     try {
         const query:{chapterId?:string;chapterIdList?:string[]} = await req.json(); // 解析 JSON 資料
         const { chapterId,chapterIdList} = query;
+        const db = await getDbPool();
         if(!!chapterId){
             await db.chapter.deleteOne({chapterId})
             await db.vocabulary.deleteMany({chapterId})

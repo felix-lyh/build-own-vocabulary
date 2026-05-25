@@ -1,5 +1,5 @@
 
-import db from '@/lib/mongodb';
+import { getDbPool } from '@/lib/mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 import type { AreticleType,UpsertAreticleType } from '@/type/article'
 export const dynamic = 'force-dynamic';
@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
         if (!articleId) {
             return NextResponse.json({ error: 'Missing articleId parameter' }, { status: 400 });
         }
-        
+        const db = await getDbPool();
         const article = await db.article.findOne({ articleId });
         return NextResponse.json({ payload: article, message: 'Article found successfully' }, { status: 200 });
     } catch (error) {
@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
             createTime:createTime, // Date.now
             update:createTime
         }     
+        const db = await getDbPool();
         await db.article.updateOne({articleId},{$set:insertData})
         return NextResponse.json({ payload:insertData, message: 'ArticleItem saved successfully' }, { status: 200 });
     } catch (error) {
@@ -46,6 +47,7 @@ export async function PUT(req: NextRequest) {
         const query:AreticleType = await req.json(); // 解析 JSON 資料
         const { articleId,content } = query;
         if(!!articleId){
+            const db = await getDbPool();
             await db.article.updateOne({articleId},{$set: {content,update:Date.now()}})
         }else{
             return NextResponse.json({ error: 'Invalid request there is no id' }, { status: 400 });
@@ -61,6 +63,7 @@ export async function DELETE(req: NextRequest) {
         const query:{articleId?:string} = await req.json(); // 解析 JSON 資料
         const { articleId } = query;
         if(!!articleId){
+            const db = await getDbPool();
             await db.article.deleteOne({articleId})
         }
         return NextResponse.json({ message: 'vocabulary delete successfully' }, { status: 200 });

@@ -1,5 +1,5 @@
 
-import db from '@/lib/mongodb';
+import { getDbPool } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb'
 import { NextRequest, NextResponse } from 'next/server';
 import { paginate } from '@/lib/dbhandle';
@@ -20,6 +20,7 @@ export async function GET(req: NextRequest) {
         }
     })
     try {
+        const db = await getDbPool();
         const vocabulary = await paginate(db.vocabulary, options, query)
         const response = NextResponse.json(vocabulary);
         return response;
@@ -49,6 +50,7 @@ export async function POST(req: NextRequest) {
             SourceWeb,
             XPath
         }
+        const db = await getDbPool();
         await db.vocabulary.insertOne(insertData)
         return NextResponse.json({ payload: insertData, message: 'vocabulary saved successfully' }, { status: 200 });
     } catch (error) {
@@ -61,6 +63,7 @@ export async function PUT(req: NextRequest) {
         const query: VocabularyDataType = await req.json(); // 解析 JSON 資料
         const { id } = query;
         if (!!id) {
+            const db = await getDbPool();
             await db.vocabulary.updateOne({ id }, { $set: {...query,update: Date.now()} })
         } else {
             return NextResponse.json({ error: 'Invalid request there is no id' }, { status: 400 });
@@ -75,6 +78,7 @@ export async function DELETE(req: NextRequest) {
     try {
         const query: { id?: string; idList?: string[] } = await req.json(); // 解析 JSON 資料
         const { id, idList } = query;
+        const db = await getDbPool();
         if (!!id) {
             await db.vocabulary.deleteOne({ id })
         }
