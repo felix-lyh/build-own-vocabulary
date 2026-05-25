@@ -6,15 +6,20 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 // const collectionName = 'article'
 // const db.article = db[collectionName]
-export async function GET(_: NextRequest) {
-    // try {
-    //     const { articleId } = await params;
+export async function GET(req: NextRequest) {
+    try {
+        const { searchParams } = new URL(req.url);
+        const articleId = searchParams.get('articleId');
         
-    //     const article = await db.article.findOne({articleId});
-    //     return NextResponse.json({payload:article, message: 'Article found successfully' }, { status: 200 });
-    // } catch (error) {
-    //     return NextResponse.json({ error }, { status: 500 });
-    // }
+        if (!articleId) {
+            return NextResponse.json({ error: 'Missing articleId parameter' }, { status: 400 });
+        }
+        
+        const article = await db.article.findOne({ articleId });
+        return NextResponse.json({ payload: article, message: 'Article found successfully' }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ error: error }, { status: 500 });
+    }
 }
 
 
