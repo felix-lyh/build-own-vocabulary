@@ -24,10 +24,6 @@ jobs:
               run: |
                   docker build -t ${{ secrets.ACR_REGISTRY }}/myspace/next-app:latest .
 
-            - name: Push image
-              run: |
-                  docker push ${{ secrets.ACR_REGISTRY }}/myspace/next-app:latest
-
             - name: Deploy ECS
               uses: appleboy/ssh-action@v1.0.3
               with:
