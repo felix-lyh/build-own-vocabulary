@@ -36,7 +36,6 @@ export async function POST(req: NextRequest) {
         const query = await req.json(); // 解析 JSON 資料
         const { bookId, chapterId, vocabulary, translations, examples, SourceWeb = '', XPath } = query as VocabularyDataType;
         const createTime = Date.now();
-        // const reviewTime = Date.now();
         const insertData: VocabularyDataType = {
             bookId,
             chapterId,

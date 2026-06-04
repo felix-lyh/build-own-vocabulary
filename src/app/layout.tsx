@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { $t } from '@/utils/index'
 import HeaderBar from "@/components/header-bar";
 import Logo from "@/components/logo";
+import { useEffect } from "react";
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -25,6 +26,12 @@ export default function RootLayout({
         return pathname.slice(1) as RouterType
     }
 
+    useEffect(()=>{
+        // const token = localStorage.getItem('token')
+        // if (!token) {
+        //     router.push('/login')
+        // }
+    },[])
     return (
         <html lang="en">
             <body className="h-fit min-h-[100vh]">

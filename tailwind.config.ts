@@ -1,4 +1,4 @@
-import { warn } from "console";
+import { text } from "stream/consumers";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -12,6 +12,7 @@ export default {
     	extend: {
     		colors: {
                 theme: '#1ABC9C', // use in components: text-theme bg-theme
+                text: '#333',
     			background: 'hsl(var(--background))',
     			foreground: 'hsl(var(--foreground))',
     			card: {

@@ -67,5 +67,13 @@
     "upload_article.desc":"上传喜欢的文章，精读分析，做阅读笔记",
 
     "empty_article":"暂无内容",
-    "empty_article.desc":"请先上传喜欢的文章"
+    "empty_article.desc":"请先上传喜欢的文章",
+
+    "login.page.header_desc":"登录后可以同步您的学习数据，随时随地继续您的学习之旅",
+    "login.email":"邮箱",
+    "login.password":"密码",
+    "login.email_ph":"请输入邮箱",
+    "login.email_ph.invalid":"请输入有效的邮箱地址",
+    "login.password_ph":"请输入密码",
+    "login_btn":"登录"
 }
