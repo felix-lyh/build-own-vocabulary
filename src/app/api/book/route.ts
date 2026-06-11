@@ -39,15 +39,15 @@ export async function POST(req: NextRequest) {
         }
         const db = await getDbPool();
         await db.books.insertOne(insertData)
-        const insertChapter:BookChapterType = {
-            bookId:insertData.bookId,
-            chapterName:'default', // the chapter name
-            chapterDesc:'default chapter',
-            chapterId:(new ObjectId).toString(),
-            createTime:createTime, // Date.now
-            update:createTime
-        }
-        await db.chapter.insertOne(insertChapter)
+        // const insertChapter:BookChapterType = {
+        //     bookId:insertData.bookId,
+        //     chapterName:'default', // the chapter name
+        //     chapterDesc:'default chapter',
+        //     chapterId:(new ObjectId).toString(),
+        //     createTime:createTime, // Date.now
+        //     update:createTime
+        // }
+        // await db.chapter.insertOne(insertChapter)
         return NextResponse.json({ payload:insertData, message: 'book created successfully' }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: error }, { status: 400 });
