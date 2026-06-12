@@ -20,7 +20,7 @@ jobs:
                   script: |
                         cd /opt/build-own-vocabulary
   
-                        git fetch origin
+                        git fetch origin/main
                         git reset --hard origin/main
 
                         docker compose down
