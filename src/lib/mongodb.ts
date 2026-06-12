@@ -15,14 +15,12 @@ const collectionList = [
 type CollectionName = typeof collectionList[number];
 
 let dbPool: Record<CollectionName, Collection> | null = null;
-
+const uri:string = process.env.NEXT_PUBLIC_MONGO_DB_URI!;
 export async function getDbPool() {
     if (dbPool) {
         return dbPool;
     }
-
-    const uri = process.env.MONGO_DB_URI;
-
+    
     if (!uri) {
         throw new Error('MONGO_DB_URI is not defined');
     }
