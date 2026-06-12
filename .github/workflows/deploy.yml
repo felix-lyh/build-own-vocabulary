@@ -20,13 +20,8 @@ jobs:
                   script: |
                         cd /opt/build-own-vocabulary
   
-                        git clean -fd
-                        git pull origin main
-                        
-                        # Force remove any remaining containers and free resources
-                        docker compose down -v --remove-orphans
-                        
-                        # Give system time to release ports
-                        sleep 2
-                        
+                        git fetch origin
+                        git reset --hard origin/main
+
+                        docker compose down
                         docker compose up -d --build
