@@ -6,7 +6,7 @@ import { UserInfoType, LoginParamsType } from '@/type/user';
 // import config from '@/config';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
         await db.users.insertOne(insertData)
         const token = jwt.sign(
             { userId: insertData.userId, email: insertData.email },
-            "config.JWT_SECRET",
+            JWT_SECRET,
             { expiresIn: '1y' }
         );
         return NextResponse.json({ payload: {...insertData,token}, message: 'userinfo saved successfully' }, { status: 200 });

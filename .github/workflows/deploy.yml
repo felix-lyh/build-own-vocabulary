@@ -20,8 +20,9 @@ jobs:
                   script: |
                         cd /opt/build-own-vocabulary
   
-                        git fetch origin/main
+                        git fetch origin
                         git reset --hard origin/main
 
                         docker compose down
-                        docker compose up -d --build
+                        docker compose build --no-cache
+                        docker compose up -d
