@@ -65,18 +65,19 @@ export async function PUT(req: NextRequest) {
 // delete chapter
 export async function DELETE(req: NextRequest) {
     try {
-        const query:{chapterId?:string;chapterIdList?:string[]} = await req.json(); // 解析 JSON 資料
-        const { chapterId,chapterIdList} = query;
+        const query:{chapterIdList:string[]} = await req.json(); // 解析 JSON 資料
+        const { chapterIdList } = query;
         const db = await getDbPool();
-        if(!!chapterId){
+        if(chapterIdList && chapterIdList.length === 1){
+            let chapterId = chapterIdList ? chapterIdList[0] : ""
             await db.chapter.deleteOne({chapterId})
             await db.vocabulary.deleteMany({chapterId})
         }
-        if(!!chapterIdList){
-            await db.chapter.deleteMany({ id: { $in: chapterIdList }});
-            await db.vocabulary.deleteMany({ id: { $in: chapterIdList }});
+        if(chapterIdList && chapterIdList.length > 1){
+            await db.chapter.deleteMany({ chapterId: { $in: chapterIdList }});
+            await db.vocabulary.deleteMany({ chapterId: { $in: chapterIdList }});
         }
-        return NextResponse.json({ message: 'vocabulary delete successfully' }, { status: 200 });
+        return NextResponse.json({ message: 'chapter delete successfully' }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error,message: 'Invalid request' }, { status: 400 });
     }

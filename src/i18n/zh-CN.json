@@ -14,9 +14,12 @@
     "common.placeholder": "请输入",
     "common.save": "保存",
     "common.cancel": "取消",
+    "common.confirm": "确认",
     "common.close": "关闭",
     "common.back": "返回",
     "common.upload": "上传",
+    "common.default_alert_title": "是否确认删除？",
+    "common.default_alert_description": "此操作无法撤销。这将永久删除数据。",
     "vocabulary.page.header_desc": "建立自己的词汇书，学自己想学的，掌握自己的词汇进度，用兴趣推动您的学习之旅",
     "add_vocabulary_book":"新增词汇书",
     "add_vocabulary_book_desc":"为您的学习目标创建一个自定义的单词书",
@@ -75,5 +78,8 @@
     "login.email_ph":"请输入邮箱",
     "login.email_ph.invalid":"请输入有效的邮箱地址",
     "login.password_ph":"请输入密码",
-    "login_btn":"登录"
+    "login_btn":"登录",
+
+    "chapter.delete_alert_title":"是否确认删除章节？",
+    "chapter.delete_alert_desc":"此操作无法撤销。这将永久删除章节及其下的所有词汇。"
 }

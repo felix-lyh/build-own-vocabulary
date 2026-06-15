@@ -11,11 +11,8 @@ export default function Page() {
     const [bookVisible, setBookVisible] = useState(false)
     const [bookList, setBookList] = useState<BookType[]>([])
     const addBookCallBack = (data: BookType) => {
-        // if (!bookName) return
-        // addBook({ bookName }).then(() => {
-        //     setBookVisible(false)
-        //     getBookList()
-        // })
+        if (!data.bookId) return
+        setBookList([data,...bookList ])
     }
     const getBookList = () => {
         getBooks({ limit: 0, page }).then((res: any) => {

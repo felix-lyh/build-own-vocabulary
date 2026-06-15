@@ -8,3 +8,6 @@ export interface BookChapterType {
 }
 
 export type UpsertChapterType = Pick<BookChapterType,"bookId"|"chapterName"|"chapterDesc">
+export type DeleteChapterType = {
+    chapterIdList:string[]
+}

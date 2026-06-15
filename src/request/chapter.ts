@@ -1,5 +1,5 @@
 import request from './index';
-import type { BookChapterType,UpsertChapterType } from '@/type/chapter'
+import type { BookChapterType,UpsertChapterType,DeleteChapterType } from '@/type/chapter'
 export const getChapters = ({bookId,limit=0,page=1}:{bookId:string,limit:number,page:number}) => {
     return request({
         url: '/api/chapter',
@@ -21,5 +21,13 @@ export const updateChapter = ({chapterId,chapterName,chapterDesc}:BookChapterTyp
         url: `/api/chapter`,
         method: 'put',
         data: { chapterName,chapterDesc },
+    });
+};
+
+export const deleteChapter = ({chapterIdList}:DeleteChapterType) => {
+    return request({
+        url: `/api/chapter`,
+        method: 'delete',
+        data: { chapterIdList },
     });
 };

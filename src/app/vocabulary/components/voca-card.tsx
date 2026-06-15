@@ -11,7 +11,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { $t,isOneWord } from '@/utils/index'
-import { deleteOneVoca, updateVocabulary } from '@/request/vocabulary';
+import { deleteVocaList, updateVocabulary } from '@/request/vocabulary';
 interface PropType extends VocabularyDataType {
     isEditState: boolean;
     isChecked: boolean;
@@ -24,13 +24,14 @@ export default function VocabularyCard(props: PropType) {
     const [isEditTrans, setEditTrans] = useState(false)
     const [isEditExample, setEditExample] = useState(false)
     const [exitWin, setExitWin] = useState<Window | null>(null)
-    const handleCheck = (checked: boolean, id: string) => {
-        props.onSelectChange(checked, id)
+    const handleCheck = ({selectType="multi",checked, id}: {selectType?:"single"|"multi",checked: boolean, id: string}) => {
+        props.onSelectChange({selectType,checked, id})
     }
     const handleDeleteOneVoca = () => {
-        deleteOneVoca(props.id).then(() => {
-            props.onUpdateVacoList()
-        })
+        props.onSelectChange({selectType:"single",id: props.id})
+        // deleteOneVoca(props.id).then(() => {
+        //     props.onUpdateVacoList()
+        // })
     }
     const handleUpdate = (query: QueryVocabulary) => {
         updateVocabulary({ ...query, id: props.id }).then(() => {
@@ -58,7 +59,7 @@ export default function VocabularyCard(props: PropType) {
     return (
         <div className="w-[30%] min-w-[300px] bg-white rounded-md border border-gray-200 p-[10px] cursor-pointer overflow-hidden">
             <div className='flex justify-between items-center mb-[6px]'>
-                {props.isEditState && <Checkbox name={props.id} checked={props.isChecked} onCheckedChange={(event: boolean) => handleCheck(event, props.id)} />}
+                {props.isEditState && <Checkbox name={props.id} checked={props.isChecked} onCheckedChange={(event: boolean) => handleCheck({checked: event, id: props.id})} />}
                 <Popover>
                     <PopoverTrigger asChild>
                         <span className='inline-block ml-auto leading-[10px] w-[30px] h-[30px] text-center text-[36px] hover:bg-theme hover:text-[#fff] rounded-[6px]'>...</span>

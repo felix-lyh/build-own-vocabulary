@@ -75,14 +75,14 @@ export async function PUT(req: NextRequest) {
 // delete vocabulary
 export async function DELETE(req: NextRequest) {
     try {
-        const query: { id?: string; idList?: string[] } = await req.json(); // 解析 JSON 資料
-        const { id, idList } = query;
+        const query: { ids?: string[] } = await req.json(); // 解析 JSON 資料
+        const { ids } = query;
         const db = await getDbPool();
-        if (!!id) {
-            await db.vocabulary.deleteOne({ id })
+        if (!!ids && ids.length === 1) {
+            await db.vocabulary.deleteOne({ id: ids[0] })
         }
-        if (!!idList) {
-            await db.vocabulary.deleteMany({ id: { $in: idList } });
+        if (!!ids && ids.length > 1) {
+            await db.vocabulary.deleteMany({ id: { $in: ids } });
         }
         return NextResponse.json({ message: 'vocabulary delete successfully' }, { status: 200 });
     } catch (error) {

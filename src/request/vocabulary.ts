@@ -27,20 +27,13 @@ export const getVocabularyList = ({ bookId,chapterId, page = 1, limit = 100, }: 
     });
 };
 
-export const deleteOneVoca = (id: string) => {
+export const deleteVocaList = (ids: string[]) => {
     return request({
         url: `/api/vocabulary`,
         method: 'delete',
         data:{
-            id
+            ids
         }
     });
 }
 
-export const deleteManyVoca = (idList: string[]) => {
-    return request({
-        url: `/api/vocabulary`,
-        method: 'delete',
-        data: { idList }
-    });
-}
