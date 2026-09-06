@@ -35,9 +35,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className="h-fit min-h-[100vh]">
-                <div className="flex bg-[#F5F5F5] min-h-[100vh]">
+                <div className="flex bg-[#F5F5F5] min-h-[100vh] pb-16 md:pb-0">
                     {routerList.includes(currentPath()) &&
-                        <ul className="px-[15px] py-[10px] w-[16%] min-w-[200px] bg-white">
+                        <ul className="hidden md:block px-[15px] py-[10px] w-[16%] min-w-[200px] bg-white">
                             <li className="mb-[35px]"><Logo></Logo></li>
                             {
                                 routerList.map((item: RouterType) => {
@@ -57,13 +57,35 @@ export default function RootLayout({
                             }
                         </ul>
                     }
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                         {routerList.includes(currentPath()) && <HeaderBar leftContent={$t(currentPath())}></HeaderBar>}
                         <div className={`${routerList.includes(currentPath()) && 'p-[20px]'}`}>
                             {children}
                         </div>
                     </div>
                 </div>
+                {/* mobile bottom navigation */}
+                {routerList.includes(currentPath()) &&
+                    <nav className="md:hidden fixed bottom-0 inset-x-0 z-50 bg-white border-t border-[#E9ECEF] shadow-[0_-4px_12px_rgba(29,43,41,0.04)]">
+                        <ul className="flex justify-around">
+                            {
+                                routerList.map((item: RouterType) => {
+                                    return (
+                                        <li onClick={() => toPage(item)}
+                                            className={`${currentPath() === item ? 'text-theme' : 'text-zinc-400'} flex-1 flex flex-col items-center gap-0.5 py-2 cursor-pointer transition-colors duration-200`} key={item}>
+                                            <SvgIcon
+                                                name={item}
+                                                width={24}
+                                                height={24}
+                                            />
+                                            <span className="text-[10px] font-manrope font-medium">{$t(item)}</span>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </nav>
+                }
                 <Toaster
                     position="top-center"
                     toastOptions={{

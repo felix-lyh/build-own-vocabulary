@@ -6,6 +6,16 @@ import type { BookType } from '@/type/vocabularyBook'
 import { getBooks } from '@/request/book'
 import Link from 'next/link';
 import AddBookDialog from './components/add-book-dialog';
+
+// cycling gradient covers so each book looks like a distinct physical book
+const BOOK_COVERS = [
+    'from-[#1ABC9C] to-[#0E8C74]',
+    'from-[#3498DB] to-[#21618C]',
+    'from-[#9B59B6] to-[#6C3483]',
+    'from-[#F39C12] to-[#B9770E]',
+    'from-[#E74C3C] to-[#922B21]',
+    'from-[#6366F1] to-[#4338CA]',
+]
 export default function Page() {
     const [page, setPage] = useState(1)
     const [bookVisible, setBookVisible] = useState(false)
@@ -27,36 +37,55 @@ export default function Page() {
     }, [])
     return (
         <>
-            <div className='flex justify-between'>
-                <h3>{$t('vocabulary.page.header_desc')}</h3>
-                <div onClick={() => setBookVisible(true)} className='flex items-center cursor-pointer bg-primary rounded-lg text-[#fff] h-fit py-[8px] px-[10px]'>
-                    <SvgIcon width={20} height={20} name='vocabulary' color='#fff'></SvgIcon>
-                    <span className='ml-[10px]'>{$t('add_vocabulary_book')}</span>
+            <div className='flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4'>
+                <div className='flex items-center gap-4'>
+                    <div className='shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-[#1ABC9C] to-[#0E8C74] shadow-lg shadow-[#1ABC9C]/30 flex items-center justify-center'>
+                        <SvgIcon width={24} height={24} name='vocabulary' color='#fff'></SvgIcon>
+                    </div>
+                    <div className='min-w-0'>
+                        <h3 className='font-headline-lg font-bold text-xl text-on-surface'>{$t('vocabulary')}</h3>
+                        <p className='text-sm text-zinc-500 mt-0.5 max-w-xl'>{$t('vocabulary.page.header_desc')}</p>
+                    </div>
+                </div>
+                <div className='flex items-center gap-3 shrink-0'>
+                    <Link href="/practice" className='flex items-center cursor-pointer bg-white border border-[#1ABC9C]/50 text-[#0E8C74] rounded-xl h-fit py-[8px] px-4 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
+                        <SvgIcon width={18} height={18} name='completion' color='#0E8C74'></SvgIcon>
+                        <span className='ml-2'>{$t('practice')}</span>
+                    </Link>
+                    <div onClick={() => setBookVisible(true)} className='flex items-center cursor-pointer bg-gradient-to-r from-[#1ABC9C] to-[#0E8C74] rounded-xl text-[#fff] h-fit py-[9px] px-4 text-sm font-medium shadow-md shadow-[#1ABC9C]/30 hover:shadow-lg hover:brightness-105 active:scale-95 transition-all'>
+                        <SvgIcon width={18} height={18} name='vocabulary' color='#fff'></SvgIcon>
+                        <span className='ml-2'>{$t('add_vocabulary_book')}</span>
+                    </div>
                 </div>
             </div>
-            <div className='mt-[15px] h-full'>
+            <div className='mt-6 h-full'>
                 {
                     bookList.length ?
-                        <ul className='flex flex-wrap'>
-                            {bookList.map(book =>
-                                <div key={book.bookId} className="flex mt-[15px] gap-8 cursor-pointer">
+                        <ul className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6'>
+                            {bookList.map((book, index) =>
+                                <li key={book.bookId}>
                                     <Link href={`/vocabulary/${book.bookId}`} className="block">
-                                        <div className="group relative h-60 w-52 [perspective:1000px] text-[#fff] text-2xl" >
-                                            <div className="absolute inset-0 h-full w-48 rounded-lg bg-primary shadow-md"></div>
-                                            <div className="relative z-50 h-full w-48 origin-left transition-transform duration-500 ease-out [transform-style:preserve-3d] group-hover:[transform:rotateY(-30deg)]">
-                                                <div className="rounded-lg bg-white shadow-md absolute flex w-full h-full [backface-visibility:hidden]">
-                                                    <div className="relative flex h-full w-full flex-col items-start justify-between rounded-lg p-4" >
-                                                        <div className="absolute inset-0 w-full rounded-lg bg-[#a8a8a8] py-[10px] px-[15px]">{book.bookName}</div>
-                                                        <div className="relative z-10 flex w-full flex-1 flex-col">
-                                                        </div>
-                                                    </div>
+                                        <div className={`group relative w-full aspect-[13/16] rounded-2xl bg-gradient-to-br ${BOOK_COVERS[index % BOOK_COVERS.length]} text-white shadow-lg shadow-black/10 overflow-hidden cursor-pointer p-4 sm:p-5 pl-6 sm:pl-7 flex flex-col hover:-translate-y-2 hover:rotate-[-1deg] hover:shadow-2xl hover:shadow-black/20 transition-all duration-300`}>
+                                            {/* book spine */}
+                                            <div className='absolute left-0 top-0 h-full w-[10px] bg-black/20 border-r border-white/25'></div>
+                                            {/* monogram watermark */}
+                                            <span className='absolute -right-3 -top-7 text-[120px] leading-none font-black text-white/10 select-none pointer-events-none'>
+                                                {book.bookName?.charAt(0)?.toUpperCase()}
+                                            </span>
+                                            <span className='self-start text-[10px] tracking-[0.18em] uppercase font-bold bg-white/20 rounded-full px-2.5 py-1 backdrop-blur-sm'>
+                                                {$t('vocabulary')}
+                                            </span>
+                                            <div className='mt-auto relative'>
+                                                <h4 className='font-headline-lg text-base sm:text-lg font-bold leading-snug line-clamp-2 drop-shadow-sm'>{book.bookName}</h4>
+                                                {book.bookDesc && <p className='mt-1.5 text-xs text-white/75 leading-relaxed line-clamp-2 hidden sm:block'>{book.bookDesc}</p>}
+                                                <div className='mt-3 flex items-center gap-1.5 text-xs font-semibold text-white/90 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300'>
+                                                    <span>{$t('start_learning')}</span>
+                                                    <SvgIcon width={14} height={14} name='next' color='#fff'></SvgIcon>
                                                 </div>
                                             </div>
-                                            {/* <div className="z-1 absolute bottom-0 right-0 flex h-48 w-14 -translate-x-10 transform items-start justify-start rounded-r-lg bg-green-600 pl-2 pt-2 text-xs font-bold text-white transition-transform duration-300 ease-in-out [backface-visibility:hidden] group-hover:translate-x-0 group-hover:rotate-[5deg]"><div className="-rotate-90 whitespace-nowrap pb-16 pr-9">CLICK TO READ</div>
-                                        </div> */}
                                         </div>
                                     </Link>
-                                </div>)}
+                                </li>)}
                         </ul>
                         :
                         <div onClick={() => setBookVisible(true)} className="group mt-[65px] bg-white/50 border-2 border-dashed border-[#E9ECEF] rounded-xl flex flex-col items-center justify-center p-8 text-center hover:bg-[#E6F6F4]/20 hover:border-[#2EB7A3] transition-all cursor-pointer">

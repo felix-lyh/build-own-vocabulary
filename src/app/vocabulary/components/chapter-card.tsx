@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SvgIcon from "@/icons/svg-icon";
 import {
     Popover,
@@ -15,37 +14,27 @@ interface ChapterCardProps extends BookChapterType {
 
 export default function ChapterCard({ chapterId, chapterName, chapterDesc, callback }: ChapterCardProps) {
     return (
-        <div className="group bg-white rounded-xl p-6 shadow-[0_4px_12px_rgba(29,43,41,0.04)] border border-zinc-100 hover:shadow-[0_8px_20px_rgba(29,43,41,0.08)] transition-all flex items-center gap-6 w-full">
-            <div className="rounded-full w-[40px] h-[40px] bg-[#E6F6F4] flex items-center justify-center">
-                <span className="text-theme">
-                    <SvgIcon name="circle-more" />
-                    {/* <SvgIcon name="completion" /> */}
+        <div className="group bg-white rounded-2xl p-5 shadow-[0_2px_10px_rgba(29,43,41,0.04)] border border-zinc-100 hover:shadow-[0_12px_28px_rgba(26,188,156,0.14)] hover:border-[#1ABC9C]/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-5 w-full cursor-pointer">
+            <div className="shrink-0 rounded-2xl w-12 h-12 bg-gradient-to-br from-[#E6F6F4] to-[#CFF0EA] flex items-center justify-center group-hover:from-[#1ABC9C] group-hover:to-[#0E8C74] transition-all duration-300">
+                <span className="text-[#1ABC9C] group-hover:text-white transition-colors">
+                    <SvgIcon name="vocabulary" width={22} />
                 </span>
             </div>
-            <div className="flex-grow">
-                <div className="flex items-center gap-3 mb-1">
-                    <h3 className="font-headline-lg text-lg">{chapterName}</h3>
-                    <span className="text-xs font-label-sm text-zinc-400">42 words</span>
-                </div>
-                <div className="w-full bg-zinc-100 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-theme h-full w-full"></div>
-                </div>
-                <div className="flex justify-between mt-2">
-                    <span className="text-[10px] uppercase font-bold text-theme">Mastered</span>
-                    <span className="text-[10px] uppercase font-bold text-zinc-400">100% Mastery</span>
-                </div>
+            <div className="flex-grow min-w-0">
+                <h3 className="font-headline-lg text-lg font-bold text-zinc-800 truncate">{chapterName}</h3>
+                {chapterDesc && <p className="text-xs text-zinc-400 mt-0.5 truncate">{chapterDesc}</p>}
             </div>
-            <div className="flex items-center gap-3" onClick={(e) => e.stopPropagation()} >
-                {/* <button className="px-6 py-2.5 rounded-xl border-2 border-theme text-theme font-bold text-sm hover:bg-[#E6F6F4] transition-all active:scale-95">Review</button> */}
-
+            <span className="shrink-0 text-[#1ABC9C] opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-300">
+                <SvgIcon name="next" width={18} />
+            </span>
+            <div className="flex items-center gap-3 shrink-0" onClick={(e) => e.stopPropagation()} >
                 <Popover>
                     <PopoverTrigger asChild>
-                        <span className='flex justify-center items-center cursor-pointer p-[8px] ml-auto leading-[10px] hover:bg-theme hover:text-[#fff] rounded-[6px]'><SvgIcon name="more" /></span>
+                        <span className='flex justify-center items-center cursor-pointer p-[8px] ml-auto text-zinc-400 hover:bg-theme hover:text-[#fff] rounded-[6px] transition-colors'><SvgIcon name="more" /></span>
                     </PopoverTrigger>
                     <PopoverContent className="w-fit py-[6px] px-0">
                         <ul>
-
-                            <li className='cursor-pointer px-[10px] text-red-500 hover:bg-red-500 hover:text-[#fff]' 
+                            <li className='cursor-pointer px-[10px] py-1 text-red-500 hover:bg-red-500 hover:text-[#fff]'
                             onClick={() => callback && callback(chapterId)}>{$t('delete_btn')}</li>
                         </ul>
                     </PopoverContent>
