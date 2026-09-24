@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { $t } from '@/utils/index';
 import SvgIcon from '@/icons/svg-icon';
 import type { BookType } from '@/type/vocabularyBook'
-import { getBooks } from '@/request/book'
+import { getBooks } from '@/request/vocabulary'
 import Link from 'next/link';
 import AddBookDialog from './components/add-book-dialog';
 

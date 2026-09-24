@@ -2,8 +2,8 @@
 import { getDbPool } from '@/lib/mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 import type { AreticleType,UpsertAreticleType } from '@/type/article'
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// export const dynamic = 'force-dynamic';
+// export const revalidate = 0;
 // const collectionName = 'article'
 // const db.article = db[collectionName]
 export async function GET(req: NextRequest) {

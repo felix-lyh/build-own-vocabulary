@@ -4,8 +4,8 @@ import { ObjectId } from 'mongodb'
 import { NextRequest, NextResponse } from 'next/server';
 import { paginate } from '@/lib/dbhandle';
 import type { ArticleItemType,UpsertArticleItemType } from '@/type/article'
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// export const dynamic = 'force-dynamic';
+// export const revalidate = 0;
 // const collectionName = 'articleList'
 // const db.articleList = db[collectionName]
 export async function GET(req: NextRequest) {

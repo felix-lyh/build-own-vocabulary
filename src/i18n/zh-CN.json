@@ -20,6 +20,8 @@
     "common.upload": "上传",
     "common.default_alert_title": "是否确认删除？",
     "common.default_alert_description": "此操作无法撤销。这将永久删除数据。",
+    "common.name": "名称",
+    "common.desc": "描述",
     "vocabulary.page.header_desc": "建立自己的词汇书，学自己想学的，掌握自己的词汇进度，用兴趣推动您的学习之旅",
     "add_vocabulary_book":"新增词汇书",
     "start_learning":"开始学习",
@@ -100,5 +102,10 @@
     "login_btn":"登录",
 
     "chapter.delete_alert_title":"是否确认删除章节？",
-    "chapter.delete_alert_desc":"此操作无法撤销。这将永久删除章节及其下的所有词汇。"
+    "chapter.delete_alert_desc":"此操作无法撤销。这将永久删除章节及其下的所有词汇。",
+
+    "add_works.btn":"新增作品",
+    "add_works.name":"作品名称",
+    "add_works.name_ph":"请输入作品名称",
+    "add_works.desc":"作品描述"
 }

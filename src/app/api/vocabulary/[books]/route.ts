@@ -5,8 +5,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { paginate } from '@/lib/dbhandle';
 import type { BookType } from '@/type/vocabularyBook'
 import type { BookChapterType } from '@/type/chapter'
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// export const dynamic = 'force-dynamic';
+// export const revalidate = 0;
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     // console.log('searchParams',searchParams)
@@ -39,21 +39,21 @@ export async function POST(req: NextRequest) {
         }
         const db = await getDbPool();
         await db.books.insertOne(insertData)
-        // const insertChapter:BookChapterType = {
-        //     bookId:insertData.bookId,
-        //     chapterName:'default', // the chapter name
-        //     chapterDesc:'default chapter',
-        //     chapterId:(new ObjectId).toString(),
-        //     createTime:createTime, // Date.now
-        //     update:createTime
-        // }
-        // await db.chapter.insertOne(insertChapter)
+        const insertChapter:BookChapterType = {
+            bookId:insertData.bookId,
+            chapterName:'default', // the chapter name
+            chapterDesc:'default chapter',
+            chapterId:(new ObjectId).toString(),
+            createTime:createTime, // Date.now
+            update:createTime
+        }
+        await db.chapter.insertOne(insertChapter)
         return NextResponse.json({ payload:insertData, message: 'book created successfully' }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: error }, { status: 400 });
     }
 }
-// update a word
+// update a book
 export async function PUT(req: NextRequest) {
     try {
         const query:BookType = await req.json(); // 解析 JSON 資料

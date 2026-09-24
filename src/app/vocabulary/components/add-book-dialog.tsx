@@ -10,7 +10,7 @@ import type { AddBookType } from '@/type/vocabularyBook'
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-import { addBook } from '@/request/book'
+import { addBook } from '@/request/vocabulary'
 interface PropType {
     dialogVisible: boolean,
     callbackData: Function,
