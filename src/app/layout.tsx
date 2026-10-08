@@ -27,11 +27,11 @@ export default function RootLayout({
     }
 
     useEffect(()=>{
-        // const token = localStorage.getItem('token')
-        // if (!token) {
-        //     router.push('/login')
-        // }
-    },[])
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
+        if (!token && routerList.includes(currentPath())) {
+            router.replace('/login');
+        }
+    },[pathname])
     return (
         <html lang="en">
             <body className="h-fit min-h-[100vh]">

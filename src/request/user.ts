@@ -1,23 +1,39 @@
 import request from './index';
-export interface User {
-    id: string;
+
+export interface AuthUser {
+    userId: string;
     name: string;
     email: string;
+    createTime: number;
 }
 
-/** Fetch a user by ID. */
-export async function getUser(userId: string): Promise<User> {
+export interface AuthResponse {
+    payload: AuthUser & { token: string };
+    message?: string;
+}
+
+/** Register a new account. Resolves with the user profile and JWT. */
+export async function register(name: string, email: string, password: string): Promise<AuthResponse> {
     return request({
-        url: `/api/users/${encodeURIComponent(userId)}`,
-        method: 'get',
+        url: '/api/auth/register',
+        method: 'post',
+        data: { name, email, pwt: password },
     });
 }
 
-/** Log a user in. */
-export async function login(email: string, password: string): Promise<User> {
+/** Log in with email and password. Resolves with the user profile and JWT. */
+export async function login(email: string, password: string): Promise<AuthResponse> {
     return request({
-        url: '/api/login',
+        url: '/api/auth/login',
         method: 'post',
-        data: { email, password },
+        data: { email, pwt: password },
+    });
+}
+
+/** Fetch the profile of the currently authenticated user (uses the stored JWT). */
+export async function getProfile(): Promise<{ payload: AuthUser }> {
+    return request({
+        url: '/api/user',
+        method: 'get',
     });
 }

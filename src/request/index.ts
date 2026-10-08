@@ -7,6 +7,18 @@ const instance = axios.create({
     timeout: 6000,
     headers: { 'Authorization': 'Bearer fixed-token' }
 });
+
+// attach the JWT from localStorage to every request when available
+instance.interceptors.request.use(function (config) {
+    if (typeof window !== 'undefined') {
+        const token = window.localStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+    }
+    return config;
+});
+
 // 添加响应拦截器
 instance.interceptors.response.use(function (response:any) {
     // 2xx 范围内的状态码
