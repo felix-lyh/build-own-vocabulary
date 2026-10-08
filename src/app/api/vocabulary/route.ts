@@ -5,21 +5,25 @@ import { NextRequest, NextResponse } from 'next/server';
 import { paginate } from '@/lib/dbhandle';
 import type { BookType } from '@/type/vocabulary'
 import type { BookChapterType } from '@/type/chapter'
-// export const dynamic = 'force-dynamic';
-// export const revalidate = 0;
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     // console.log('searchParams',searchParams)
-    const { page,limit } = Object.fromEntries(searchParams.entries());
-    const options = { page,limit }
-    const query = {  }
+    const { bookId, chapterId, page, limit, SourceWeb, sort = 'createTime', sortBy = '-1' } = Object.fromEntries(searchParams.entries());
+    const options = { page, limit, sort, sortBy }
+    const query = { bookId, chapterId, SourceWeb }
+    Object.keys(query).forEach((item) => {
+        const key = item as keyof typeof query
+        if (!query[key]) {
+            delete query[key]
+        }
+    })
     try {
         const db = await getDbPool();
-        const vocabulary = await paginate(db.books,options,query)
+        const vocabulary = await paginate(db.vocabulary, options, query)
         const response = NextResponse.json(vocabulary);
         return response;
     } catch (error) {
-        console.log('error',error)
+        console.log('error', error)
         return NextResponse.json({ error }, { status: 500 });
     }
 }

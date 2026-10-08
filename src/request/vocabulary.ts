@@ -1,4 +1,4 @@
-import type { VocabularyDataType,AddVocaType } from '@/type/vocabulary'
+import type { VocabularyDataType,AddVocaType,AddBookType } from '@/type/vocabulary'
 import request from './index';
 import type { BookChapterType,UpsertChapterType,DeleteChapterType } from '@/type/chapter'
 type QueryVocabulary = Partial<VocabularyDataType>;
@@ -15,19 +15,19 @@ export const getBooks = ({limit=0,page=1}:{limit:number,page:number}) => {
     });
 };
 
-export const addBook = ({ bookName }:{ bookName:string }) => {
+export const addBook = ({ bookName,bookDesc }:AddBookType) => {
     return request({
         url: '/api/vocabulary/books',
         method: 'post',
-        data: { bookName },
+        data: { bookName,bookDesc },
     });
 };
 
-export const updateBook = ({id, text }:{ id:string,text:string }) => {
+export const updateBook = ({id, bookName,bookDesc }:{ id:string,bookName:string,bookDesc:string }) => {
     return request({
         url: `/api/vocabulary/books/${id}`,
         method: 'put',
-        data: { text },
+        data: { bookName,bookDesc },
     });
 };
 

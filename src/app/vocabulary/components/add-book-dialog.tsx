@@ -6,7 +6,7 @@ import {
     DialogTitle
 } from "@/components/ui/dialog";
 import { $t } from '@/utils/index';
-import type { AddBookType } from '@/type/vocabularyBook'
+import type { AddBookType } from '@/type/vocabulary'
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';

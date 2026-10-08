@@ -1,8 +1,8 @@
 'use client'
 import { useState } from "react";
-import { $t } from '@/utils/index'
+import { $t } from '@/utils/index';
 import SvgIcon from '@/icons/svg-icon';
-
+// import { AddDialog } from '@/components/add-dialog';
 export default function Page() {
     const [bookVisible, setBookVisible] = useState(false)
     return (
@@ -14,6 +14,7 @@ export default function Page() {
                     <span className='ml-[10px]'>{$t('add_works.btn')}</span>
                 </div>
             </div>
+            {/* <AddDialog></AddDialog> */}
         </div>
     );
 }
