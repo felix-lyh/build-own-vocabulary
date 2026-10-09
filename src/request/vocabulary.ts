@@ -31,6 +31,22 @@ export const updateBook = ({id, bookName,bookDesc }:{ id:string,bookName:string,
     });
 };
 
+export const deleteBook = ({ bookId }:{ bookId:string }) => {
+    return request({
+        url: '/api/vocabulary/books',
+        method: 'delete',
+        data: { bookId },
+    });
+};
+
+export const deleteBookList = ({ bookIdList }:{ bookIdList:string[] }) => {
+    return request({
+        url: '/api/vocabulary/books',
+        method: 'delete',
+        data: { bookIdList },
+    });
+};
+
 /**
  * Manage chapter API functions
  */
@@ -67,6 +83,14 @@ export const delChapter = ({chapterId}:DeleteChapterType) => {
     });
 };
 
+export const deleteChapterList = ({chapterIdList}:{ chapterIdList:string[] }) => {
+    return request({
+        url: `/api/vocabulary/books/chapter`,
+        method: 'delete',
+        data: { chapterIdList },
+    });
+};
+
 /**
  *  Manage vocabulary API functions
  */
@@ -87,10 +111,15 @@ export const updateVocabulary = (query: QueryVocabulary) => {
     });
 };
 export const getVocabularyList = ({ bookId,chapterId, page = 1, limit = 100, }: { bookId: string;chapterId:string; page?: number, limit?: number, sort?: Record<string, 1 | -1>; }) => {
+    // with chapterId: /api/vocabulary/{bookId}/{chapterId}/vocabulary
+    // without chapterId: /api/vocabulary/{bookId}/vocabulary (book level)
+    const url = chapterId
+        ? `/api/vocabulary/${bookId}/${chapterId}/vocabulary`
+        : `/api/vocabulary/${bookId || 'all'}/vocabulary`;
     return request({
-        url: `/api/vocabulary/${bookId}/${chapterId}/vocabulary`,
+        url,
         method: 'get',
-        params: { bookId,chapterId, page, limit },
+        params: { bookId,chapterId: chapterId || undefined, page, limit },
     });
 };
 

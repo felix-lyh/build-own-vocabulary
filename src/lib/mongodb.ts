@@ -8,6 +8,7 @@ const collectionList = [
     'vocabulary',
     'articleList',
     'article',
+    'works',
     'notes',
     'comments',
 ] as const;

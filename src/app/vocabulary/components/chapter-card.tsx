@@ -1,4 +1,5 @@
 import SvgIcon from "@/icons/svg-icon";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
     Popover,
     PopoverContent,
@@ -10,11 +11,19 @@ import type { BookChapterType } from '@/type/chapter'
 import { $t } from '@/utils/index'
 interface ChapterCardProps extends BookChapterType {
     callback?: (p: string) => void
+    isEditState?: boolean
+    isChecked?: boolean
+    onSelectChange?: (chapterId: string, checked: boolean) => void
 }
 
-export default function ChapterCard({ chapterId, chapterName, chapterDesc, callback }: ChapterCardProps) {
+export default function ChapterCard({ chapterId, chapterName, chapterDesc, callback, isEditState = false, isChecked = false, onSelectChange }: ChapterCardProps) {
     return (
         <div className="group bg-white rounded-2xl p-5 shadow-[0_2px_10px_rgba(29,43,41,0.04)] border border-zinc-100 hover:shadow-[0_12px_28px_rgba(26,188,156,0.14)] hover:border-[#1ABC9C]/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-5 w-full cursor-pointer">
+            {isEditState &&
+                <span className="shrink-0" onClick={(e) => e.stopPropagation()}>
+                    <Checkbox checked={isChecked} onCheckedChange={(checked) => onSelectChange && onSelectChange(chapterId, checked === true)} />
+                </span>
+            }
             <div className="shrink-0 rounded-2xl w-12 h-12 bg-gradient-to-br from-[#E6F6F4] to-[#CFF0EA] flex items-center justify-center group-hover:from-[#1ABC9C] group-hover:to-[#0E8C74] transition-all duration-300">
                 <span className="text-[#1ABC9C] group-hover:text-white transition-colors">
                     <SvgIcon name="vocabulary" width={22} />

@@ -107,5 +107,21 @@
     "add_works.btn":"新增作品",
     "add_works.name":"作品名称",
     "add_works.name_ph":"请输入作品名称",
-    "add_works.desc":"作品描述"
+    "add_works.desc":"作品描述",
+
+    "writing.page.empty_state.desc":"创建你的第一个作品，开始写作之旅",
+    "writing.continue":"继续写作",
+    "writing.words":"词",
+    "writing.editor.placeholder":"从这里开始写作... 按 Ctrl+S 保存",
+    "writing.editor.unsaved":"有未保存的修改",
+    "writing.editor.saving":"保存中...",
+    "writing.editor.saved":"已保存",
+    "writing.delete_alert_title":"是否删除该作品？",
+    "writing.delete_alert_desc":"此操作无法撤销。这将永久删除该作品及其所有内容。",
+    "book.delete_alert_title":"是否删除该词汇书？",
+    "book.delete_alert_desc":"此操作无法撤销。这将永久删除该词汇书及其所有章节和词汇。",
+    "chapter.delete_alert_title":"是否删除该章节？",
+    "chapter.delete_alert_desc":"此操作无法撤销。这将永久删除该章节及其所有词汇。",
+    "vocabulary.delete_alert_title":"是否删除该词汇？",
+    "vocabulary.delete_alert_desc":"此操作无法撤销。这将永久删除该词汇。"
 }

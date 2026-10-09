@@ -73,8 +73,8 @@ export async function DELETE(req: NextRequest) {
             await db.vocabulary.deleteMany({chapterId})
         }
         if(!!chapterIdList){
-            await db.chapter.deleteMany({ id: { $in: chapterIdList }});
-            await db.vocabulary.deleteMany({ id: { $in: chapterIdList }});
+            await db.chapter.deleteMany({ chapterId: { $in: chapterIdList }});
+            await db.vocabulary.deleteMany({ chapterId: { $in: chapterIdList }});
         }
         return NextResponse.json({ message: 'vocabulary delete successfully' }, { status: 200 });
     } catch (error) {
