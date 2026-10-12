@@ -20,6 +20,8 @@ services:
     restart: always
     env_file:
       - .env.production
+    volumes:
+      - ./extension-dist:/app/extension-dist
     depends_on:
       - mongodb
     networks:
