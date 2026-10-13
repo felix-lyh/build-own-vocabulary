@@ -21,7 +21,8 @@ services:
     env_file:
       - .env.production
     volumes:
-      - ./extension-dist:/app/extension-dist
+      # - ./extension-dist:/app/extension-dist
+      - /opt/build-own-vocabulary/extension-dist:/app/extension-dist:ro
     depends_on:
       - mongodb
     networks:
