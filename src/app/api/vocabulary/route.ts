@@ -5,10 +5,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { paginate } from '@/lib/dbhandle';
 import type { BookType } from '@/type/vocabulary'
 import type { BookChapterType } from '@/type/chapter'
+
+// escape the user input before turning it into a fuzzy regex
+const escapeRegExp = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     // console.log('searchParams',searchParams)
-    const { bookId, chapterId, page, limit, SourceWeb, sort = 'createTime', sortBy = '-1' } = Object.fromEntries(searchParams.entries());
+    const { bookId, chapterId, page, limit, SourceWeb, keyword, sort = 'createTime', sortBy = '-1' } = Object.fromEntries(searchParams.entries());
     const options = { page, limit, sort, sortBy }
     const query = { bookId, chapterId, SourceWeb }
     Object.keys(query).forEach((item) => {
@@ -19,6 +23,32 @@ export async function GET(req: NextRequest) {
     })
     try {
         const db = await getDbPool();
+        const trimmedKeyword = keyword?.trim()
+        // fuzzy search only runs when `keyword` is passed, so every existing query keeps its original behaviour
+        if (trimmedKeyword) {
+            const reg = new RegExp(escapeRegExp(trimmedKeyword), 'i')
+            const searchQuery = {
+                ...query,
+                $or: [{ vocabulary: reg }, { translations: reg }, { examples: reg }],
+            }
+            const searchLimit = Number(limit) > 0 ? Number(limit) : 20
+            const words = await db.vocabulary.find(searchQuery).sort({ createTime: -1 }).limit(searchLimit).toArray()
+            // attach the owning book / chapter name so each result can show where the word comes from
+            const bookIds = [...new Set(words.map(word => word.bookId).filter(Boolean))]
+            const chapterIds = [...new Set(words.map(word => word.chapterId).filter(Boolean))]
+            const [books, chapters] = await Promise.all([
+                db.books.find({ bookId: { $in: bookIds } }, { projection: { _id: 0, bookId: 1, bookName: 1 } }).toArray(),
+                db.chapter.find({ chapterId: { $in: chapterIds } }, { projection: { _id: 0, chapterId: 1, chapterName: 1 } }).toArray(),
+            ])
+            const bookMap = Object.fromEntries(books.map(book => [book.bookId, book.bookName]))
+            const chapterMap = Object.fromEntries(chapters.map(chapter => [chapter.chapterId, chapter.chapterName]))
+            const payload = words.map(word => ({
+                ...word,
+                bookName: bookMap[word.bookId] || '',
+                chapterName: chapterMap[word.chapterId] || '',
+            }))
+            return NextResponse.json({ payload, total: payload.length });
+        }
         const vocabulary = await paginate(db.vocabulary, options, query)
         const response = NextResponse.json(vocabulary);
         return response;

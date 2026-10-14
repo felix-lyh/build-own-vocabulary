@@ -133,3 +133,14 @@ export const deleteVocaList = (ids: string[]) => {
     });
 }
 
+/**
+ * fuzzy search words by keyword, scoped by bookId / chapterId when provided
+ */
+export const searchVocabulary = ({ keyword, bookId, chapterId, limit = 20 }:{ keyword:string; bookId?:string; chapterId?:string; limit?:number }) => {
+    return request({
+        url: '/api/vocabulary',
+        method: 'get',
+        params: { keyword, bookId, chapterId, limit },
+    });
+};
+
