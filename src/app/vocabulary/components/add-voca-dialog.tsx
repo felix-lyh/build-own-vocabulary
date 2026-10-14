@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog"
 import { addVocabulary } from '@/request/vocabulary'
 import { $t } from '@/utils/index';
+import { speakWithVoice } from '@/utils/tts';
 interface PropType {
     dialogVisible:boolean,
     bookId:string,
@@ -39,6 +40,8 @@ export default function addVocaDialog({dialogVisible,bookId,chapterId,callbackDa
         addVocabulary(query).then((res:any) => {
             firstInputRef.current?.focus()
             callbackData(res?.payload)
+            // pronounce the saved word once
+            if (query.vocabulary) speakWithVoice(query.vocabulary)
         })
     };
     const handleOpenChange = (value: boolean) => {

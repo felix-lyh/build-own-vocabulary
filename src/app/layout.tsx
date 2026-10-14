@@ -1,5 +1,6 @@
 "use client";
 import SvgIcon from "@/icons/svg-icon";
+// @ts-expect-error CSS is handled by the Next.js bundler, but TypeScript may not declare side-effect CSS imports.
 import "./globals.css";
 import '@/i18n'
 import { Toaster } from "@/components/ui/sonner"
