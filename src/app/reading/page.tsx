@@ -38,7 +38,7 @@ export default function Page() {
             <div className="">
                 <ul>
                     {articleList.map((item: ArticleItemType) => (
-                        <li key={item.articleId} className='px-[20px] py-[10px] mt-[20px] rounded-lg bg-white'>
+                        <li key={item.articleId} className='px-[20px] py-[10px] mt-[20px] rounded-lg bg-surface'>
                             <h2 onClick={()=>router.push(`/reading/${item.articleId}`)} className='text-xl mb-[10px] font-bold hover:underline cursor-pointer'>{item.articleName}</h2>
                             <p>{item.articleDesc}</p>
                         </li>

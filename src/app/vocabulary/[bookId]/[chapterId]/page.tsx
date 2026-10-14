@@ -77,12 +77,12 @@ export default function Page() {
                 leftContent={<BackBtn path={`/vocabulary/${bookId}`}></BackBtn>}
                 rightContent={
                     <div className='flex items-center gap-3'>
-                        <Link href={`/practice?bookId=${bookId}&chapterId=${chapterId}`} className='bg-white border border-[#1ABC9C]/50 text-[#0E8C74] rounded-lg text-sm py-[8px] px-3 cursor-pointer hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all flex items-center gap-1.5'>
+                        <Link href={`/practice?bookId=${bookId}&chapterId=${chapterId}`} className='bg-surface border border-[#1ABC9C]/50 text-accent-strong rounded-lg text-sm py-[8px] px-3 cursor-pointer hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all flex items-center gap-1.5'>
                             <SvgIcon width={16} height={16} name='completion' color='#0E8C74' />
                             {$t('practice')}
                         </Link>
                         {vocaList.length > 0 &&
-                            <span onClick={toggleEditState} className='flex items-center cursor-pointer bg-white border border-[#1ABC9C]/50 text-[#0E8C74] rounded-lg text-sm py-[8px] px-3 shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
+                            <span onClick={toggleEditState} className='flex items-center cursor-pointer bg-surface border border-[#1ABC9C]/50 text-accent-strong rounded-lg text-sm py-[8px] px-3 shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
                                 <SvgIcon width={16} height={16} name='edit' color='#0E8C74' />
                                 <span className='ml-1.5'>{isEditState ? $t('complete_btn') : $t('edit_btn')}</span>
                             </span>
@@ -96,7 +96,7 @@ export default function Page() {
                 <div className='flex items-center justify-between mt-5 px-1 sm:px-0 sm:ml-[25px] sm:mr-8'>
                     <label className='flex items-center gap-2 cursor-pointer select-none' onClick={(e) => e.preventDefault()}>
                         <Checkbox checked={allVocaSelected} onCheckedChange={(checked) => handleSelectAllVoca(checked === true)} />
-                        <span className='text-sm text-zinc-600'>{$t('select_all')}</span>
+                        <span className='text-sm text-app-fg-muted'>{$t('select_all')}</span>
                     </label>
                     <button disabled={!selectVocaIds.length} onClick={handleDeleteSelected} className='bg-red-500 hover:bg-red-600 disabled:opacity-40 text-white rounded-xl py-[7px] px-4 text-sm font-medium shadow-sm active:scale-95 transition-all'>
                         {$t('delete_btn')}{selectVocaIds.length ? ` (${selectVocaIds.length})` : ''}

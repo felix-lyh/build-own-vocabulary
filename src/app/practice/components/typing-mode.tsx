@@ -90,28 +90,28 @@ export default function TypingMode({ words, onExit, onFinish }: PropType) {
         <div>
             {/* progress bar */}
             <div className="flex items-center gap-4">
-                <span onClick={onExit} className="shrink-0 cursor-pointer flex items-center justify-center w-9 h-9 rounded-full bg-white border border-zinc-200 text-zinc-400 hover:text-[#E74C3C] hover:border-[#E74C3C]/40 transition-colors" title={$t('common.back')}>
+                <span onClick={onExit} className="shrink-0 cursor-pointer flex items-center justify-center w-9 h-9 rounded-full bg-surface border border-app-border text-app-fg-muted hover:text-[#E74C3C] hover:border-[#E74C3C]/40 transition-colors" title={$t('common.back')}>
                     <SvgIcon name="next" width={18} className="rotate-180" />
                 </span>
-                <div className="flex-1 h-2.5 bg-white border border-zinc-100 rounded-full overflow-hidden shadow-inner">
+                <div className="flex-1 h-2.5 bg-surface border border-app-border rounded-full overflow-hidden shadow-inner">
                     <div className="h-full bg-gradient-to-r from-[#1ABC9C] to-[#0E8C74] rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
                 </div>
-                <span className="shrink-0 text-sm font-bold text-[#0E8C74] tabular-nums">{index + 1} / {words.length}</span>
+                <span className="shrink-0 text-sm font-bold text-accent-strong tabular-nums">{index + 1} / {words.length}</span>
             </div>
 
             {/* prompt card */}
-            <div className={`bg-white rounded-3xl border p-5 sm:p-8 mt-6 sm:mt-8 transition-all duration-300 ${status === 'correct'
+            <div className={`bg-surface rounded-3xl border p-5 sm:p-8 mt-6 sm:mt-8 transition-all duration-300 ${status === 'correct'
                 ? 'border-[#2ECC71]/50 shadow-[0_16px_40px_rgba(46,204,113,0.15)]'
                 : status === 'wrong'
                     ? 'border-[#E74C3C]/50 shadow-[0_16px_40px_rgba(231,76,60,0.15)]'
                     : 'border-[#1ABC9C]/20 shadow-[0_16px_40px_rgba(26,188,156,0.12)]'}`}>
-                <p className="text-xs uppercase tracking-widest text-zinc-400 font-bold mb-3">{$t('translation')}</p>
-                <p className="text-2xl font-headline-lg font-bold text-[#0E8C74] leading-snug break-words">
+                <p className="text-xs uppercase tracking-widest text-app-fg-muted font-bold mb-3">{$t('translation')}</p>
+                <p className="text-2xl font-headline-lg font-bold text-accent-strong leading-snug break-words">
                     {current?.translations || '—'}
                 </p>
                 {
                     !!current?.examples &&
-                    <p className="mt-4 text-sm text-zinc-500 italic border-l-[3px] border-[#1ABC9C]/30 pl-3 leading-relaxed break-words cursor-pointer" onClick={() => speakWithVoice(current.examples)}>
+                    <p className="mt-4 text-sm text-app-fg-muted italic border-l-[3px] border-[#1ABC9C]/30 pl-3 leading-relaxed break-words cursor-pointer" onClick={() => speakWithVoice(current.examples)}>
                         {current.examples}
                     </p>
                 }
@@ -141,7 +141,7 @@ export default function TypingMode({ words, onExit, onFinish }: PropType) {
                     {
                         revealAnswer && status !== 'correct' &&
                         <p className="mt-3 text-sm font-bold text-[#E74C3C] text-center">
-                            {$t('practice.correct_answer')}: <span className="text-zinc-800 tracking-wide">{current?.vocabulary}</span>
+                            {$t('practice.correct_answer')}: <span className="text-app-fg tracking-wide">{current?.vocabulary}</span>
                         </p>
                     }
                 </div>
@@ -151,7 +151,7 @@ export default function TypingMode({ words, onExit, onFinish }: PropType) {
             <div className="flex items-center justify-center mt-6">
                 {
                     status === 'idle' &&
-                    <button onClick={handleSkip} className="text-sm text-zinc-400 hover:text-[#E74C3C] px-4 py-2 rounded-lg hover:bg-white transition-colors">
+                    <button onClick={handleSkip} className="text-sm text-app-fg-muted hover:text-[#E74C3C] px-4 py-2 rounded-lg hover:bg-surface transition-colors">
                         {$t('practice.skip')} →
                     </button>
                 }

@@ -91,16 +91,16 @@ export default function Page() {
                     </div>
                     <div className='min-w-0'>
                         <h3 className='font-headline-lg font-bold text-xl text-on-surface'>{$t('vocabulary')}</h3>
-                        <p className='text-sm text-zinc-500 mt-0.5 max-w-xl'>{$t('vocabulary.page.header_desc')}</p>
+                        <p className='text-sm text-app-fg-muted mt-0.5 max-w-xl'>{$t('vocabulary.page.header_desc')}</p>
                     </div>
                 </div>
                 <div className='flex items-center gap-3 shrink-0'>
-                    <Link href="/practice" className='flex items-center cursor-pointer bg-white border border-[#1ABC9C]/50 text-[#0E8C74] rounded-xl h-fit py-[8px] px-4 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
+                    <Link href="/practice" className='flex items-center cursor-pointer bg-surface border border-[#1ABC9C]/50 text-accent-strong rounded-xl h-fit py-[8px] px-4 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
                         <SvgIcon width={18} height={18} name='completion' color='#0E8C74'></SvgIcon>
                         <span className='ml-2'>{$t('practice')}</span>
                     </Link>
                     {bookList.length > 0 &&
-                        <div onClick={toggleEditState} className='flex items-center cursor-pointer bg-white border border-[#1ABC9C]/50 text-[#0E8C74] rounded-xl h-fit py-[8px] px-4 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
+                        <div onClick={toggleEditState} className='flex items-center cursor-pointer bg-surface border border-[#1ABC9C]/50 text-accent-strong rounded-xl h-fit py-[8px] px-4 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
                             <SvgIcon width={18} height={18} name='edit' color='#0E8C74'></SvgIcon>
                             <span className='ml-2'>{isEditState ? $t('complete_btn') : $t('edit_btn')}</span>
                         </div>
@@ -115,7 +115,7 @@ export default function Page() {
                 <div className='mt-4 flex items-center justify-between'>
                     <label className='flex items-center gap-2 cursor-pointer select-none' onClick={(e) => e.preventDefault()}>
                         <Checkbox checked={allBooksSelected} onCheckedChange={(checked) => handleSelectAllBooks(checked === true)} />
-                        <span className='text-sm text-zinc-600'>{$t('select_all')}</span>
+                        <span className='text-sm text-app-fg-muted'>{$t('select_all')}</span>
                     </label>
                     <Button disabled={!selectedBookIds.length} onClick={handleDeleteSelected} className='bg-red-500 hover:bg-red-600 text-white'>
                         {$t('delete_btn')}{selectedBookIds.length ? ` (${selectedBookIds.length})` : ''}
@@ -176,8 +176,8 @@ export default function Page() {
                                 </li>)}
                         </ul>
                         :
-                        <div onClick={() => setBookVisible(true)} className="group mt-[65px] bg-white/50 border-2 border-dashed border-[#E9ECEF] rounded-xl flex flex-col items-center justify-center p-8 text-center hover:bg-[#E6F6F4]/20 hover:border-[#2EB7A3] transition-all cursor-pointer">
-                            <div className="w-16 h-16 rounded-full bg-[#E6F6F4] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <div onClick={() => setBookVisible(true)} className="group mt-[65px] bg-surface/50 border-2 border-dashed border-app-border rounded-xl flex flex-col items-center justify-center p-8 text-center hover:bg-accent-soft/20 hover:border-[#2EB7A3] transition-all cursor-pointer">
+                            <div className="w-16 h-16 rounded-full bg-accent-soft flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                                 <SvgIcon width={32} height={326} name='addFile' color='#2EB7A3'></SvgIcon>
                             </div>
                             <h3 className="text-headline-lg font-headline-lg text-on-surface mb-2">{$t('add_vocabulary_book')}</h3>

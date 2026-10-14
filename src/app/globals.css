@@ -58,6 +58,16 @@ html,body{
 
     --chart-5: 27 87% 67%;
 
+    /* app semantic tokens (light) */
+    --app-bg: 0 0% 96.1%;
+    --app-surface: 0 0% 100%;
+    --app-surface-muted: 0 0% 97.6%;
+    --app-fg: 0 0% 20%;
+    --app-fg-muted: 0 0% 44%;
+    --app-border: 0 0% 91.4%;
+    --app-accent-soft: 168 43% 93%;
+    --app-accent-strong: 168 68% 38%;
+
     --radius: 0.5rem
   }
   .dark {
@@ -108,7 +118,17 @@ html,body{
 
     --chart-4: 280 65% 60%;
 
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
+
+    /* app semantic tokens (dark) */
+    --app-bg: 0 0% 7%;
+    --app-surface: 0 0% 11%;
+    --app-surface-muted: 0 0% 16%;
+    --app-fg: 0 0% 92%;
+    --app-fg-muted: 0 0% 62%;
+    --app-border: 0 0% 22%;
+    --app-accent-soft: 168 45% 14%;
+    --app-accent-strong: 168 55% 55%;
   }
 }
 
@@ -119,6 +139,6 @@ html,body{
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-app-bg text-app-fg;
   }
 }

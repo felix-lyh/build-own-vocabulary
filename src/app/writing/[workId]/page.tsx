@@ -75,7 +75,7 @@ export default function Page() {
                 leftContent={<BackBtn path='/writing'></BackBtn>}
                 rightContent={
                     <div className='flex items-center gap-4'>
-                        <span className={`text-xs ${saveStatus === 'saved' ? 'text-[#0E8C74]' : saveStatus === 'dirty' ? 'text-amber-500' : 'text-zinc-400'}`}>
+                        <span className={`text-xs ${saveStatus === 'saved' ? 'text-accent-strong' : saveStatus === 'dirty' ? 'text-amber-500' : 'text-app-fg-muted'}`}>
                             {statusText[saveStatus]}
                             {saveStatus === 'saved' && savedAt ? ` ${new Date(savedAt).toLocaleTimeString()}` : ''}
                         </span>
@@ -93,18 +93,18 @@ export default function Page() {
                 <div className='flex items-end justify-between mb-3'>
                     <div className='min-w-0'>
                         <h2 className='font-headline-lg text-xl font-bold text-on-surface truncate'>{work?.workName}</h2>
-                        {work?.workDesc && <p className='text-sm text-zinc-500 mt-0.5 truncate'>{work.workDesc}</p>}
+                        {work?.workDesc && <p className='text-sm text-app-fg-muted mt-0.5 truncate'>{work.workDesc}</p>}
                     </div>
-                    <span className='text-xs text-zinc-400 shrink-0 ml-4'>{wordCount} {$t('writing.words')}</span>
+                    <span className='text-xs text-app-fg-muted shrink-0 ml-4'>{wordCount} {$t('writing.words')}</span>
                 </div>
-                <div className='flex-1 bg-white rounded-2xl border border-zinc-100 shadow-[0_4px_12px_rgba(29,43,41,0.06)] overflow-hidden flex flex-col'>
+                <div className='flex-1 bg-surface rounded-2xl border border-app-border shadow-[0_4px_12px_rgba(29,43,41,0.06)] overflow-hidden flex flex-col'>
                     <div className='h-[6px] w-full bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] shrink-0'></div>
                     <textarea
                         ref={textareaRef}
                         value={content}
                         onChange={(e) => handleContentChange(e.target.value)}
                         placeholder={$t('writing.editor.placeholder')}
-                        className='flex-1 w-full resize-none outline-none p-6 text-[15px] leading-7 text-on-surface placeholder:text-zinc-300 bg-transparent'
+                        className='flex-1 w-full resize-none outline-none p-6 text-[15px] leading-7 text-on-surface placeholder:text-app-fg-muted bg-transparent'
                     ></textarea>
                 </div>
             </div>

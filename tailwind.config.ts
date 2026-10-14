@@ -13,6 +13,19 @@ export default {
     		colors: {
                 theme: '#1ABC9C', // use in components: text-theme bg-theme
                 text: '#333',
+                /* app semantic tokens: driven by CSS vars in globals.css, switch with .dark class */
+                'app-bg': 'hsl(var(--app-bg) / <alpha-value>)',
+                'app-fg': {
+                    DEFAULT: 'hsl(var(--app-fg) / <alpha-value>)',
+                    muted: 'hsl(var(--app-fg-muted) / <alpha-value>)'
+                },
+                'app-border': 'hsl(var(--app-border) / <alpha-value>)',
+                surface: {
+                    DEFAULT: 'hsl(var(--app-surface) / <alpha-value>)',
+                    muted: 'hsl(var(--app-surface-muted) / <alpha-value>)'
+                },
+                'accent-soft': 'hsl(var(--app-accent-soft) / <alpha-value>)',
+                'accent-strong': 'hsl(var(--app-accent-strong) / <alpha-value>)',
     			background: 'hsl(var(--background))',
     			foreground: 'hsl(var(--foreground))',
     			card: {

@@ -18,25 +18,25 @@ interface ChapterCardProps extends BookChapterType {
 
 export default function ChapterCard({ chapterId, chapterName, chapterDesc, callback, isEditState = false, isChecked = false, onSelectChange }: ChapterCardProps) {
     return (
-        <div className="group bg-white rounded-2xl p-5 shadow-[0_2px_10px_rgba(29,43,41,0.04)] border border-zinc-100 hover:shadow-[0_12px_28px_rgba(26,188,156,0.14)] hover:border-[#1ABC9C]/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-5 w-full cursor-pointer">
+        <div className="group bg-surface rounded-2xl p-5 shadow-[0_2px_10px_rgba(29,43,41,0.04)] border border-app-border hover:shadow-[0_12px_28px_rgba(26,188,156,0.14)] hover:border-[#1ABC9C]/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-5 w-full cursor-pointer">
             {isEditState &&
                 <span className="shrink-0" onClick={(e) => e.stopPropagation()}>
                     <Checkbox checked={isChecked} onCheckedChange={(checked) => onSelectChange && onSelectChange(chapterId, checked === true)} />
                 </span>
             }
-            <div className="shrink-0 rounded-2xl w-12 h-12 bg-gradient-to-br from-[#E6F6F4] to-[#CFF0EA] flex items-center justify-center group-hover:from-[#1ABC9C] group-hover:to-[#0E8C74] transition-all duration-300">
+            <div className="shrink-0 rounded-2xl w-12 h-12 bg-gradient-to-br from-accent-soft to-accent-soft/60 flex items-center justify-center group-hover:from-[#1ABC9C] group-hover:to-[#0E8C74] transition-all duration-300">
                 <span className="text-[#1ABC9C] group-hover:text-white transition-colors">
                     <SvgIcon name="vocabulary" width={22} />
                 </span>
             </div>
             <div className="flex-grow min-w-0">
-                <h3 className="font-headline-lg text-lg font-bold text-zinc-800 truncate">{chapterName}</h3>
-                {chapterDesc && <p className="text-xs text-zinc-400 mt-0.5 truncate">{chapterDesc}</p>}
+                <h3 className="font-headline-lg text-lg font-bold text-app-fg truncate">{chapterName}</h3>
+                {chapterDesc && <p className="text-xs text-app-fg-muted mt-0.5 truncate">{chapterDesc}</p>}
             </div>
             <div className="flex items-center gap-3 shrink-0" onClick={(e) => e.stopPropagation()} >
                 <Popover>
                     <PopoverTrigger asChild>
-                        <span className='flex justify-center items-center cursor-pointer p-[8px] ml-auto text-zinc-400 hover:bg-theme hover:text-[#fff] rounded-[6px] transition-colors'><SvgIcon name="more" /></span>
+                        <span className='flex justify-center items-center cursor-pointer p-[8px] ml-auto text-app-fg-muted hover:bg-theme hover:text-[#fff] rounded-[6px] transition-colors'><SvgIcon name="more" /></span>
                     </PopoverTrigger>
                     <PopoverContent className="w-fit py-[6px] px-0">
                         <ul>

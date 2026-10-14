@@ -81,12 +81,12 @@ export default function Page() {
                 leftContent={<BackBtn path='/vocabulary'></BackBtn>}
                 rightContent={
                     <div className='flex items-center gap-3'>
-                        <Link href={`/practice?bookId=${bookId}`} className='flex items-center cursor-pointer bg-white border border-[#1ABC9C]/50 text-[#0E8C74] rounded-lg h-fit py-[7px] px-3 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
+                        <Link href={`/practice?bookId=${bookId}`} className='flex items-center cursor-pointer bg-surface border border-[#1ABC9C]/50 text-accent-strong rounded-lg h-fit py-[7px] px-3 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
                             <SvgIcon width={16} height={16} name='completion' color='#0E8C74'></SvgIcon>
                             <span className='ml-2'>{$t('practice')}</span>
                         </Link>
                         {chapterList.length > 0 &&
-                            <span onClick={toggleEditState} className='flex items-center cursor-pointer bg-white border border-[#1ABC9C]/50 text-[#0E8C74] rounded-lg h-fit py-[7px] px-3 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
+                            <span onClick={toggleEditState} className='flex items-center cursor-pointer bg-surface border border-[#1ABC9C]/50 text-accent-strong rounded-lg h-fit py-[7px] px-3 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
                                 <SvgIcon width={16} height={16} name='edit' color='#0E8C74'></SvgIcon>
                                 <span className='ml-2'>{isEditState ? $t('complete_btn') : $t('edit_btn')}</span>
                             </span>
@@ -101,7 +101,7 @@ export default function Page() {
                     <div className='w-[60%] mx-auto mb-4 flex items-center justify-between'>
                         <label className='flex items-center gap-2 cursor-pointer select-none' onClick={(e) => e.preventDefault()}>
                             <Checkbox checked={allChaptersSelected} onCheckedChange={(checked) => handleSelectAllChapters(checked === true)} />
-                            <span className='text-sm text-zinc-600'>{$t('select_all')}</span>
+                            <span className='text-sm text-app-fg-muted'>{$t('select_all')}</span>
                         </label>
                         <button disabled={!selectedChapterIds.length} onClick={handleDeleteSelected} className='bg-red-500 hover:bg-red-600 disabled:opacity-40 text-white rounded-xl py-[7px] px-4 text-sm font-medium shadow-sm active:scale-95 transition-all'>
                             {$t('delete_btn')}{selectedChapterIds.length ? ` (${selectedChapterIds.length})` : ''}

@@ -75,12 +75,12 @@ export default function Page() {
                     </div>
                     <div className='min-w-0'>
                         <h3 className='font-headline-lg font-bold text-xl text-on-surface'>{$t('writing')}</h3>
-                        <p className='text-sm text-zinc-500 mt-0.5 max-w-xl'>{$t('writing.page.header_desc')}</p>
+                        <p className='text-sm text-app-fg-muted mt-0.5 max-w-xl'>{$t('writing.page.header_desc')}</p>
                     </div>
                 </div>
                 <div className='flex items-center gap-3 shrink-0'>
                     {workList.length > 0 &&
-                        <div onClick={toggleEditState} className='flex items-center cursor-pointer bg-white border border-[#8B5CF6]/50 text-[#6D28D9] rounded-xl h-fit py-[8px] px-4 text-sm font-medium shadow-sm hover:bg-[#F3E8FF] hover:border-[#8B5CF6] active:scale-95 transition-all'>
+                        <div onClick={toggleEditState} className='flex items-center cursor-pointer bg-surface border border-[#8B5CF6]/50 text-[#6D28D9] rounded-xl h-fit py-[8px] px-4 text-sm font-medium shadow-sm hover:bg-[#F3E8FF] hover:border-[#8B5CF6] active:scale-95 transition-all'>
                             <SvgIcon width={18} height={18} name='edit' color='#6D28D9'></SvgIcon>
                             <span className='ml-2'>{isEditState ? $t('complete_btn') : $t('edit_btn')}</span>
                         </div>
@@ -95,7 +95,7 @@ export default function Page() {
                 <div className='mt-4 flex items-center justify-between'>
                     <label className='flex items-center gap-2 cursor-pointer select-none' onClick={(e) => e.preventDefault()}>
                         <Checkbox checked={allSelected} onCheckedChange={(checked) => handleSelectAll(checked === true)} />
-                        <span className='text-sm text-zinc-600'>{$t('select_all')}</span>
+                        <span className='text-sm text-app-fg-muted'>{$t('select_all')}</span>
                     </label>
                     <Button disabled={!selectedWorkIds.length} onClick={handleDeleteSelected} className='bg-red-500 hover:bg-red-600 text-white'>
                         {$t('delete_btn')}{selectedWorkIds.length ? ` (${selectedWorkIds.length})` : ''}
@@ -117,7 +117,7 @@ export default function Page() {
                                 </li>)}
                         </ul>
                         :
-                        <div onClick={() => setWorkVisible(true)} className="group mt-[65px] bg-white/50 border-2 border-dashed border-[#E9ECEF] rounded-xl flex flex-col items-center justify-center p-8 text-center hover:bg-[#F3E8FF]/30 hover:border-[#8B5CF6] transition-all cursor-pointer">
+                        <div onClick={() => setWorkVisible(true)} className="group mt-[65px] bg-surface/50 border-2 border-dashed border-app-border rounded-xl flex flex-col items-center justify-center p-8 text-center hover:bg-[#F3E8FF]/30 hover:border-[#8B5CF6] transition-all cursor-pointer">
                             <div className="w-16 h-16 rounded-full bg-[#F3E8FF] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                                 <SvgIcon width={32} height={32} name='addFile' color='#8B5CF6'></SvgIcon>
                             </div>

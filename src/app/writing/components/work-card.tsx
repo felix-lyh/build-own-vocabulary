@@ -36,13 +36,13 @@ export default function WorkCard({ workId, workName, workDesc, content, update, 
     const accent = CARD_ACCENTS[index % CARD_ACCENTS.length]
     const wordCount = content ? content.trim().split(/\s+/).filter(Boolean).length : 0
     return (
-        <div className="group relative w-full aspect-[4/5] rounded-2xl bg-white border border-zinc-100 shadow-[0_4px_12px_rgba(29,43,41,0.06)] overflow-hidden cursor-pointer p-5 flex flex-col hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/10 transition-all duration-300">
+        <div className="group relative w-full aspect-[4/5] rounded-2xl bg-surface border border-app-border shadow-[0_4px_12px_rgba(29,43,41,0.06)] overflow-hidden cursor-pointer p-5 flex flex-col hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/10 transition-all duration-300">
             {/* top accent bar */}
             <div className={`absolute top-0 left-0 h-[6px] w-full bg-gradient-to-r ${accent}`}></div>
             {/* folded corner */}
-            <div className="absolute top-0 right-0 w-0 h-0 border-t-[28px] border-l-[28px] border-t-zinc-100 border-l-transparent group-hover:border-t-zinc-200 transition-all"></div>
+            <div className="absolute top-0 right-0 w-0 h-0 border-t-[28px] border-l-[28px] border-t-app-border border-l-transparent group-hover:border-t-app-border transition-all"></div>
             {/* monogram watermark */}
-            <span className='absolute -right-2 bottom-6 text-[110px] leading-none font-black text-zinc-100 select-none pointer-events-none'>
+            <span className='absolute -right-2 bottom-6 text-[110px] leading-none font-black text-surface-muted select-none pointer-events-none'>
                 {workName?.charAt(0)?.toUpperCase()}
             </span>
 
@@ -60,7 +60,7 @@ export default function WorkCard({ workId, workName, workDesc, content, update, 
                 <div className='opacity-0 group-hover:opacity-100 transition-opacity' onClick={(e) => e.stopPropagation()}>
                     <Popover>
                         <PopoverTrigger asChild>
-                            <span className='flex justify-center items-center cursor-pointer p-[6px] text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 rounded-[6px] transition-colors'>
+                            <span className='flex justify-center items-center cursor-pointer p-[6px] text-app-fg-muted hover:bg-surface-muted hover:text-app-fg rounded-[6px] transition-colors'>
                                 <SvgIcon name="more" />
                             </span>
                         </PopoverTrigger>
@@ -76,21 +76,21 @@ export default function WorkCard({ workId, workName, workDesc, content, update, 
 
             <div className='mt-4 relative min-w-0'>
                 <h4 className='font-headline-lg text-base sm:text-lg font-bold leading-snug line-clamp-2 text-on-surface'>{workName}</h4>
-                {workDesc && <p className='mt-1.5 text-xs text-zinc-500 leading-relaxed line-clamp-2 hidden sm:block'>{workDesc}</p>}
+                {workDesc && <p className='mt-1.5 text-xs text-app-fg-muted leading-relaxed line-clamp-2 hidden sm:block'>{workDesc}</p>}
             </div>
 
             {/* fake text lines to suggest a written document */}
             <div className='mt-4 space-y-2 hidden sm:block'>
-                <div className='h-1.5 rounded-full bg-zinc-100 w-full'></div>
-                <div className='h-1.5 rounded-full bg-zinc-100 w-11/12'></div>
-                <div className='h-1.5 rounded-full bg-zinc-100 w-4/5'></div>
+                <div className='h-1.5 rounded-full bg-surface-muted w-full'></div>
+                <div className='h-1.5 rounded-full bg-surface-muted w-11/12'></div>
+                <div className='h-1.5 rounded-full bg-surface-muted w-4/5'></div>
             </div>
 
-            <div className='mt-auto relative flex items-center justify-between text-[11px] text-zinc-400'>
+            <div className='mt-auto relative flex items-center justify-between text-[11px] text-app-fg-muted'>
                 <span>{formatDate(update)}</span>
                 <span>{wordCount} {$t('writing.words')}</span>
             </div>
-            <div className='mt-2 flex items-center gap-1.5 text-xs font-semibold text-[#0E8C74] opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300'>
+            <div className='mt-2 flex items-center gap-1.5 text-xs font-semibold text-accent-strong opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300'>
                 <span>{$t('writing.continue')}</span>
                 <SvgIcon width={14} height={14} name='next' color='#0E8C74'></SvgIcon>
             </div>

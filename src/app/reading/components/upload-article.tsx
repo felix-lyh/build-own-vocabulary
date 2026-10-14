@@ -93,8 +93,8 @@ export default function upsertArticleItem({ dialogVisible, callbackData, handleD
                         </SelectContent>
                     </Select>
                     {uploadType === 'file' && <div className='relative'>
-                        <div onClick={handleFileClick} className="group bg-white/50 border-2 border-dashed border-[#E9ECEF] rounded-xl flex flex-col items-center justify-center p-8 text-center hover:bg-[#E6F6F4]/20 hover:border-[#2EB7A3] transition-all cursor-pointer">
-                            <div className="w-16 h-16 rounded-full bg-[#E6F6F4] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <div onClick={handleFileClick} className="group bg-surface/50 border-2 border-dashed border-app-border rounded-xl flex flex-col items-center justify-center p-8 text-center hover:bg-accent-soft/20 hover:border-[#2EB7A3] transition-all cursor-pointer">
+                            <div className="w-16 h-16 rounded-full bg-accent-soft flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                                 <SvgIcon width={32} height={32} name='upload' color='#2EB7A3'></SvgIcon>
                             </div>
                             <h3 className="text-headline-lg font-headline-lg text-on-surface mb-2">{$t('upload_article')}</h3>

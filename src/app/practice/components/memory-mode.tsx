@@ -62,31 +62,31 @@ export default function MemoryMode({ words, onExit, onFinish }: PropType) {
         <div>
             {/* progress bar */}
             <div className="flex items-center gap-4">
-                <span onClick={onExit} className="shrink-0 cursor-pointer flex items-center justify-center w-9 h-9 rounded-full bg-white border border-zinc-200 text-zinc-400 hover:text-[#E74C3C] hover:border-[#E74C3C]/40 transition-colors" title={$t('common.back')}>
+                <span onClick={onExit} className="shrink-0 cursor-pointer flex items-center justify-center w-9 h-9 rounded-full bg-surface border border-app-border text-app-fg-muted hover:text-[#E74C3C] hover:border-[#E74C3C]/40 transition-colors" title={$t('common.back')}>
                     <SvgIcon name="next" width={18} className="rotate-180" />
                 </span>
-                <div className="flex-1 h-2.5 bg-white border border-zinc-100 rounded-full overflow-hidden shadow-inner">
+                <div className="flex-1 h-2.5 bg-surface border border-app-border rounded-full overflow-hidden shadow-inner">
                     <div className="h-full bg-gradient-to-r from-[#1ABC9C] to-[#0E8C74] rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
                 </div>
-                <span className="shrink-0 text-sm font-bold text-[#0E8C74] tabular-nums">{index + 1} / {words.length}</span>
+                <span className="shrink-0 text-sm font-bold text-accent-strong tabular-nums">{index + 1} / {words.length}</span>
             </div>
 
             {/* flip card */}
             <div className="mt-8 [perspective:1400px] cursor-pointer select-none" onClick={flip}>
                 <div className={`relative h-[300px] sm:h-[380px] [transform-style:preserve-3d] transition-transform duration-500 ease-out ${flipped ? '[transform:rotateY(180deg)]' : ''}`}>
                     {/* front: word */}
-                    <div className="absolute inset-0 [backface-visibility:hidden] bg-white rounded-3xl border border-[#1ABC9C]/20 shadow-[0_16px_40px_rgba(26,188,156,0.12)] flex flex-col items-center justify-center p-5 sm:p-8">
+                    <div className="absolute inset-0 [backface-visibility:hidden] bg-surface rounded-3xl border border-[#1ABC9C]/20 shadow-[0_16px_40px_rgba(26,188,156,0.12)] flex flex-col items-center justify-center p-5 sm:p-8">
                         {
                             current?.SourceWeb &&
-                            <a href={current.SourceWeb} target="_blank" onClick={(e) => e.stopPropagation()} className="absolute top-5 left-5 text-[11px] text-[#1ABC9C] bg-[#E6F6F4] rounded-full px-2.5 py-1 hover:bg-[#1ABC9C] hover:text-white transition-colors">{$t('vocabulary_data_source')}</a>
+                            <a href={current.SourceWeb} target="_blank" onClick={(e) => e.stopPropagation()} className="absolute top-5 left-5 text-[11px] text-[#1ABC9C] bg-accent-soft rounded-full px-2.5 py-1 hover:bg-[#1ABC9C] hover:text-white transition-colors">{$t('vocabulary_data_source')}</a>
                         }
-                        <div onClick={(e) => e.stopPropagation()} className="absolute top-4 right-4 w-11 h-11 rounded-full bg-[#E6F6F4] text-[#1ABC9C] flex items-center justify-center hover:bg-[#1ABC9C] hover:text-white transition-colors">
+                        <div onClick={(e) => e.stopPropagation()} className="absolute top-4 right-4 w-11 h-11 rounded-full bg-accent-soft text-[#1ABC9C] flex items-center justify-center hover:bg-[#1ABC9C] hover:text-white transition-colors">
                             {current?.vocabulary && <PlayVoice needInitVoice={true} voiceValue={current.vocabulary} />}
                         </div>
-                        <p className="text-3xl sm:text-4xl font-headline-lg font-black text-zinc-800 text-center break-all leading-snug cursor-context-menu" onClick={(e) => { e.stopPropagation(); copyText(current?.vocabulary || '') }}>
+                        <p className="text-3xl sm:text-4xl font-headline-lg font-black text-app-fg text-center break-all leading-snug cursor-context-menu" onClick={(e) => { e.stopPropagation(); copyText(current?.vocabulary || '') }}>
                             {current?.vocabulary}
                         </p>
-                        <p className="absolute bottom-6 text-xs text-zinc-400 tracking-wide">{$t('practice.reveal_hint')}</p>
+                        <p className="absolute bottom-6 text-xs text-app-fg-muted tracking-wide">{$t('practice.reveal_hint')}</p>
                     </div>
                     {/* back: meaning */}
                     <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-3xl bg-gradient-to-br from-[#1ABC9C] to-[#0E8C74] shadow-[0_16px_40px_rgba(14,140,116,0.30)] flex flex-col items-center justify-center p-5 sm:p-8 text-white overflow-auto">
@@ -109,13 +109,13 @@ export default function MemoryMode({ words, onExit, onFinish }: PropType) {
                 <button
                     onClick={prev}
                     disabled={index === 0}
-                    className="w-12 h-12 rounded-full bg-white border border-zinc-200 flex items-center justify-center text-zinc-500 hover:border-[#1ABC9C] hover:text-[#1ABC9C] disabled:opacity-30 disabled:cursor-not-allowed active:scale-90 transition-all">
+                    className="w-12 h-12 rounded-full bg-surface border border-app-border flex items-center justify-center text-app-fg-muted hover:border-[#1ABC9C] hover:text-[#1ABC9C] disabled:opacity-30 disabled:cursor-not-allowed active:scale-90 transition-all">
                     <SvgIcon name="next" width={22} className="rotate-180" />
                 </button>
-                <span className="hidden sm:inline text-xs text-zinc-400 tracking-widest">Space · ← →</span>
+                <span className="hidden sm:inline text-xs text-app-fg-muted tracking-widest">Space · ← →</span>
                 <button
                     onClick={next}
-                    className={`w-12 h-12 rounded-full flex items-center justify-center active:scale-90 transition-all ${isLast ? 'bg-gradient-to-r from-[#1ABC9C] to-[#0E8C74] text-white shadow-md shadow-[#1ABC9C]/30' : 'bg-white border border-zinc-200 text-zinc-500 hover:border-[#1ABC9C] hover:text-[#1ABC9C]'}`}>
+                    className={`w-12 h-12 rounded-full flex items-center justify-center active:scale-90 transition-all ${isLast ? 'bg-gradient-to-r from-[#1ABC9C] to-[#0E8C74] text-white shadow-md shadow-[#1ABC9C]/30' : 'bg-surface border border-app-border text-app-fg-muted hover:border-[#1ABC9C] hover:text-[#1ABC9C]'}`}>
                     <SvgIcon name={isLast ? 'completion' : 'next'} width={22} />
                 </button>
             </div>

@@ -58,15 +58,15 @@ export default function VocabularyCard(props: PropType) {
         }
     }
     return (
-        <div className="w-full sm:w-[47%] lg:w-[30%] min-w-0 bg-white rounded-2xl border border-zinc-100 shadow-[0_2px_10px_rgba(29,43,41,0.04)] p-4 sm:p-5 cursor-pointer overflow-hidden hover:shadow-[0_12px_28px_rgba(26,188,156,0.14)] hover:border-[#1ABC9C]/30 hover:-translate-y-0.5 transition-all duration-300">
+        <div className="w-full sm:w-[47%] lg:w-[30%] min-w-0 bg-surface rounded-2xl border border-app-border shadow-[0_2px_10px_rgba(29,43,41,0.04)] p-4 sm:p-5 cursor-pointer overflow-hidden hover:shadow-[0_12px_28px_rgba(26,188,156,0.14)] hover:border-[#1ABC9C]/30 hover:-translate-y-0.5 transition-all duration-300">
             <div className='flex justify-between items-center mb-2'>
                 {props.isEditState && <Checkbox name={props.id} checked={props.isChecked} onCheckedChange={(event: boolean) => handleCheck({checked: event, id: props.id})} />}
                 {props.SourceWeb && (
-                    <span onClick={handleDataSource} className='text-[11px] text-[#1ABC9C] bg-[#E6F6F4] rounded-full px-2 py-0.5 truncate max-w-[50%] cursor-pointer hover:bg-[#1ABC9C] hover:text-white transition-colors'>{$t('vocabulary_data_source')}</span>
+                    <span onClick={handleDataSource} className='text-[11px] text-[#1ABC9C] bg-accent-soft rounded-full px-2 py-0.5 truncate max-w-[50%] cursor-pointer hover:bg-[#1ABC9C] hover:text-white transition-colors'>{$t('vocabulary_data_source')}</span>
                 )}
                 <Popover>
                     <PopoverTrigger asChild>
-                        <span className='inline-block ml-auto leading-[10px] w-[30px] h-[30px] text-center text-[30px] text-zinc-400 hover:bg-theme hover:text-[#fff] rounded-[6px] transition-colors'>...</span>
+                        <span className='inline-block ml-auto leading-[10px] w-[30px] h-[30px] text-center text-[30px] text-app-fg-muted hover:bg-theme hover:text-[#fff] rounded-[6px] transition-colors'>...</span>
                     </PopoverTrigger>
                     <PopoverContent className="w-fit py-[6px] px-0">
                         <ul>
@@ -85,13 +85,13 @@ export default function VocabularyCard(props: PropType) {
             </div>
             {/* word + pronunciation */}
             <div className='flex items-center justify-between gap-2'>
-                <span className='text-2xl font-headline-lg font-bold text-zinc-800 break-all leading-tight'>{modelValue.vocabulary}</span>
-                <div className='shrink-0 w-10 h-10 rounded-full bg-[#E6F6F4] text-[#1ABC9C] flex items-center justify-center hover:bg-theme hover:text-white transition-colors'>
+                <span className='text-2xl font-headline-lg font-bold text-app-fg break-all leading-tight'>{modelValue.vocabulary}</span>
+                <div className='shrink-0 w-10 h-10 rounded-full bg-accent-soft text-[#1ABC9C] flex items-center justify-center hover:bg-theme hover:text-white transition-colors'>
                     <PlayVoice needInitVoice={false} voiceValue={modelValue.vocabulary} />
                 </div>
             </div>
             {/* translation */}
-            <div className='group min-h-[44px] flex items-center justify-between gap-2 rounded-lg bg-[#E6F6F4]/60 px-3 py-2 text-[13px] text-[#0E8C74] my-2.5'>
+            <div className='group min-h-[44px] flex items-center justify-between gap-2 rounded-lg bg-accent-soft/60 px-3 py-2 text-[13px] text-accent-strong my-2.5'>
                 {
                     isEditTrans ?
                         <Input
@@ -112,7 +112,7 @@ export default function VocabularyCard(props: PropType) {
                 </span>
             </div>
             {/* example */}
-            <div className='group min-h-[38px] flex items-center justify-between gap-2 border-l-[3px] border-[#1ABC9C]/40 pl-3 text-[13px] text-zinc-500 italic my-1'>
+            <div className='group min-h-[38px] flex items-center justify-between gap-2 border-l-[3px] border-[#1ABC9C]/40 pl-3 text-[13px] text-app-fg-muted italic my-1'>
                 {isEditExample ?
                     <Input
                         defaultValue={modelValue.examples}
