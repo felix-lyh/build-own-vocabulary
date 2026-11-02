@@ -22,7 +22,7 @@ services:
       - .env.production
     volumes:
       # - ./extension-dist:/app/extension-dist
-      - /opt/build-own-vocabulary/extension-dist:/app/extension-dist:ro
+      - /opt/extension-artifacts:/app/extension-dist
     depends_on:
       - mongodb
     networks:
