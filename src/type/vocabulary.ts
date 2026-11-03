@@ -5,6 +5,7 @@ export interface VocabularyDataType {
     SourceWeb: string; // the vocabulary from which website
     vocabulary:string; // word or phrase
     translations:string; 
+    definitions?: string[]; // multiple definitions of the word
     examples:string;
     createTime:number; // Date.now
     update:number;
@@ -12,7 +13,7 @@ export interface VocabularyDataType {
     XPath:string // the location of the word on the source web page, used for later review and preview
 }
 
-export type AddVocaType = Pick<VocabularyDataType, "vocabulary" | "translations" | "examples" | "bookId" | "chapterId">
+export type AddVocaType = Pick<VocabularyDataType, "vocabulary" | "translations" | "definitions" | "examples" | "bookId" | "chapterId">
 
 export interface BookType {
     bookName:string; // the vocabulary belong to which file

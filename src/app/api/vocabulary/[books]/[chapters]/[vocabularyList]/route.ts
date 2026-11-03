@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     try {
         const query = await req.json(); // 解析 JSON 資料
-        const { bookId, chapterId, vocabulary, translations, examples, SourceWeb = '', XPath } = query as VocabularyDataType;
+        const { bookId, chapterId, vocabulary, translations, definitions = [], examples, SourceWeb = '', XPath } = query as VocabularyDataType;
         const createTime = Date.now();
         const insertData: VocabularyDataType = {
             bookId,
@@ -42,6 +42,7 @@ export async function POST(req: NextRequest) {
             id: (new ObjectId).toString(),
             vocabulary,
             translations,
+            definitions,
             examples,
             createTime,
             update: createTime,

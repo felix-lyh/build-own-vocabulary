@@ -90,12 +90,27 @@ export default function MemoryMode({ words, onExit, onFinish }: PropType) {
                     </div>
                     {/* back: meaning */}
                     <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-3xl bg-gradient-to-br from-[#1ABC9C] to-[#0E8C74] shadow-[0_16px_40px_rgba(14,140,116,0.30)] flex flex-col items-center justify-center p-5 sm:p-8 text-white overflow-auto">
+                        {/* Translation as headline */}
                         <p className="text-xl sm:text-2xl font-headline-lg font-bold text-center leading-snug break-all cursor-context-menu" onClick={(e) => { e.stopPropagation(); copyText(current?.translations || '') }}>
                             {current?.translations || '—'}
                         </p>
+                        {/* Definitions list */}
+                        {current?.definitions && current.definitions.length > 0 && (
+                            <ol className="mt-4 space-y-1.5 text-center max-w-[90%]">
+                                {current.definitions.slice(0, 3).map((def, idx) => (
+                                    <li key={idx} className="text-sm text-white/90 leading-relaxed">
+                                        <span className="inline-block w-5 h-5 rounded-full bg-white/20 text-[11px] font-semibold mr-1.5 align-middle">{idx + 1}</span>
+                                        <span>{def}</span>
+                                    </li>
+                                ))}
+                                {current.definitions.length > 3 && (
+                                    <li className="text-xs text-white/60 italic">+{current.definitions.length - 3} more</li>
+                                )}
+                            </ol>
+                        )}
                         {
                             current?.examples &&
-                            <p className="mt-5 text-sm text-white/80 italic text-center leading-relaxed max-w-[85%] cursor-pointer" onClick={(e) => { e.stopPropagation(); speakWithVoice(current.examples) }}>
+                            <p className="mt-4 text-sm text-white/80 italic text-center leading-relaxed max-w-[85%] cursor-pointer" onClick={(e) => { e.stopPropagation(); speakWithVoice(current.examples) }}>
                                 {current.examples}
                             </p>
                         }

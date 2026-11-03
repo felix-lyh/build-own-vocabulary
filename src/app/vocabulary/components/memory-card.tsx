@@ -42,6 +42,16 @@ export default function MemoryCard(modelValue: PropType) {
             <div onClick={()=>copyText(modelValue.translations)} className={`${isShowTrans ? 'visible' : 'invisible'} mt-[15px] cursor-copy`} >
                 {modelValue.translations}
             </div>
+            {modelValue.definitions && modelValue.definitions.length > 0 && (
+                <ol className={`${isShowTrans ? 'visible' : 'invisible'} mt-[10px] text-[13px] text-white/80 space-y-1`}>
+                    {modelValue.definitions.slice(0, 3).map((def, idx) => (
+                        <li key={idx} className="flex items-start justify-center gap-1">
+                            <span className="inline-block w-[18px] h-[18px] rounded-full bg-white/20 text-[10px] leading-[18px]">{idx + 1}</span>
+                            <span>{def}</span>
+                        </li>
+                    ))}
+                </ol>
+            )}
             <div onClick={()=>copyText(modelValue.examples)} className={`${isShowTrans ? 'visible' : 'invisible'} mt-[15px] cursor-copy`} >
                 {modelValue.examples}
             </div>

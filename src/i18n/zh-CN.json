@@ -152,5 +152,14 @@
     "chapter.delete_alert_title":"是否删除该章节？",
     "chapter.delete_alert_desc":"此操作无法撤销。这将永久删除该章节及其所有词汇。",
     "vocabulary.delete_alert_title":"是否删除该词汇？",
-    "vocabulary.delete_alert_desc":"此操作无法撤销。这将永久删除该词汇。"
+    "vocabulary.delete_alert_desc":"此操作无法撤销。这将永久删除该词汇。",
+
+    "collect_words.definitions":"释义",
+    "collect_words.definitions_ph":"输入释义",
+    "vocabulary_detail":"详情",
+    "definitions_more":"更多释义",
+    "definitions_count":"条释义",
+    "no_definitions":"暂无释义",
+    "no_definitions_hint":"可点击上方「+ 添加释义」按钮添加",
+    "add_definition":"添加释义"
 }

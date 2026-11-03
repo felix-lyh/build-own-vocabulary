@@ -95,11 +95,11 @@ export const deleteChapterList = ({chapterIdList}:{ chapterIdList:string[] }) =>
  *  Manage vocabulary API functions
  */
 
-export const addVocabulary = ({ vocabulary, translations = '', examples = '',bookId,chapterId }: AddVocaType) => {
+export const addVocabulary = ({ vocabulary, translations = '', definitions = [], examples = '',bookId,chapterId }: AddVocaType) => {
     return request({
         url: `/api/vocabulary/${bookId}/${chapterId}/vocabulary`,
         method: 'post',
-        data: { vocabulary, translations, examples, bookId, chapterId },
+        data: { vocabulary, translations, definitions, examples, bookId, chapterId },
     });
 };
 
