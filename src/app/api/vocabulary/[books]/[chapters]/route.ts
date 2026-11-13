@@ -12,7 +12,8 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     // console.log('searchParams',searchParams)
     const { page,limit,bookId,sort,sortBy } = Object.fromEntries(searchParams.entries());
-    const options = { page,limit,sort,sortBy }
+    console.log('[chapter GET] raw params:', { page,limit,bookId,sort,sortBy });
+    const options = { page,limit,sort,sortBy,collation: { locale: 'en', numericOrdering: true } }
     const query = { bookId }
     try {
         const db = await getDbPool();

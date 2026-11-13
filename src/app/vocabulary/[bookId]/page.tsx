@@ -13,7 +13,6 @@ import { getChapters,delChapter,deleteChapterList } from '@/request/vocabulary';
 import { Checkbox } from '@/components/ui/checkbox';
 import AlertDialogTemplate from '@/components/alert-dialog-template';
 import type { BookChapterType } from '@/type/chapter'
-import { useRouter } from 'next/navigation'
 import {
     Popover,
     PopoverContent,
@@ -32,7 +31,6 @@ const SORT_OPTIONS: SortOption[] = [
 export default function Page() {
     const params = useParams()
     const bookId = params.bookId as string
-    const router = useRouter()
     const [chapterDialogVisible, setChapterDialogVisible] = useState(false)
     const [chapterList, setChapterList] = useState<BookChapterType[]>([])
     const [selectedChapterIds, setSelectedChapterIds] = useState<string[]>([])
@@ -152,7 +150,7 @@ export default function Page() {
                 <ul className="w-[60%] mx-auto flex flex-col items-center">
                     {
                         chapterList.map(chapter => {
-                            return <li className='w-full mb-4' onClick={() =>router.push(`/vocabulary/${bookId}/${chapter.chapterId}`)} key={chapter.chapterId}>
+                            return <li className='w-full mb-4' key={chapter.chapterId}>
                                 <ChapterCard {...chapter} callback = {handleDelChapter}
                                     isEditState={isEditState}
                                     isChecked={selectedChapterIds.includes(chapter.chapterId)}
