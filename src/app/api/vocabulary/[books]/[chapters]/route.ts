@@ -12,16 +12,16 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     // console.log('searchParams',searchParams)
     const { page,limit,bookId,sort,sortBy } = Object.fromEntries(searchParams.entries());
-    console.log('[chapter GET] raw params:', { page,limit,bookId,sort,sortBy });
+    // console.log('[chapter GET] raw params:', { page,limit,bookId,sort,sortBy });
     const options = { page,limit,sort,sortBy,collation: { locale: 'en', numericOrdering: true } }
     const query = { bookId }
     try {
         const db = await getDbPool();
         const vocabulary = await paginate(db.chapter,options,query)
-        const response = NextResponse.json(vocabulary);
+        const response = NextResponse.json({ ...vocabulary, __debug: { sort, sortBy, page, limit } });
         return response;
     } catch (error) {
-        console.log('error',error)
+        // console.log('error',error)
         return NextResponse.json({ error }, { status: 500 });
     }
 }
