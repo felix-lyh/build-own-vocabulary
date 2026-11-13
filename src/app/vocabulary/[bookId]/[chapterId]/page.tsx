@@ -19,8 +19,9 @@ export default function Page() {
     const [addVocaVisible,setAddVocaVisible] = useState(false)
     const [vocaList,setVocalist] = useState<VocabularyDataType[]>([])
 
-    const updateVocaList = (data:VocabularyDataType)=>{
-        setVocalist([data,...vocaList,])
+    const updateVocaList = (data?: VocabularyDataType) => {
+        if (!data || data.bookId !== bookId || data.chapterId !== chapterId) return
+        setVocalist(prev => prev.some(voca => voca.id === data.id) ? prev : [data, ...prev])
     }
     const getVocaList = () => {
         getVocabularyList({ bookId, chapterId, limit: 0, page: 1 }).then((res: any) => {

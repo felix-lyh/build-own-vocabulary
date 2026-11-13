@@ -51,11 +51,11 @@ export const deleteBookList = ({ bookIdList }:{ bookIdList:string[] }) => {
  * Manage chapter API functions
  */
 
-export const getChapters = ({bookId,limit=0,page=1}:{bookId:string,limit:number,page:number}) => {
+export const getChapters = ({bookId,limit=0,page=1,sort='createTime',sortBy='-1'}:{bookId:string,limit:number,page:number,sort?:string,sortBy?:string}) => {
     return request({
         url: `/api/vocabulary/${bookId}/chapter`,
         method: 'get',
-        params: { bookId,limit, page },
+        params: { bookId,limit, page,sort,sortBy },
     });
 };
 
@@ -67,11 +67,11 @@ export const addChapter = ({ bookId,chapterName,chapterDesc }:UpsertChapterType)
     });
 };
 
-export const updateChapter = ({chapterId,chapterName,chapterDesc}:BookChapterType) => {
+export const updateChapter = ({ bookId, chapterId, chapterName, chapterDesc }: BookChapterType) => {
     return request({
         url: `/api/vocabulary/books/chapter`,
         method: 'put',
-        data: { chapterName,chapterDesc },
+        data: { bookId, chapterId, chapterName, chapterDesc },
     });
 };
 

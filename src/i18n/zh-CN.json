@@ -122,6 +122,15 @@
     "empty_article":"暂无内容",
     "empty_article.desc":"请先上传喜欢的文章",
 
+    "reading.continue":"继续阅读",
+    "reading.edit_content":"编辑内容",
+    "reading.empty_content":"暂无正文，点击此处上传文章内容",
+    "reading.word_unit":"词",
+    "reading.read_time":"预计阅读",
+    "reading.minutes":"分钟",
+    "article.delete_alert_title":"是否删除该文章？",
+    "article.delete_alert_desc":"此操作无法撤销。这将永久删除该文章及其内容。",
+
     "login.page.header_desc":"登录后可以同步您的学习数据，随时随地继续您的学习之旅",
     "login.email":"邮箱",
     "login.password":"密码",

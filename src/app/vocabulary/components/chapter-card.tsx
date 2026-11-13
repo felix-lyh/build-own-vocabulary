@@ -1,12 +1,24 @@
+"use client";
+import { useState, useRef } from 'react';
 import SvgIcon from "@/icons/svg-icon";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogClose,
+    DialogTitle
+} from "@/components/ui/dialog";
 
 import type { BookChapterType } from '@/type/chapter'
+import { updateChapter } from '@/request/vocabulary'
 
 import { $t } from '@/utils/index'
 interface ChapterCardProps extends BookChapterType {
@@ -14,9 +26,29 @@ interface ChapterCardProps extends BookChapterType {
     isEditState?: boolean
     isChecked?: boolean
     onSelectChange?: (chapterId: string, checked: boolean) => void
+    onUpdate?: (chapter: BookChapterType) => void
 }
 
-export default function ChapterCard({ chapterId, chapterName, chapterDesc, callback, isEditState = false, isChecked = false, onSelectChange }: ChapterCardProps) {
+export default function ChapterCard({ bookId, chapterId, chapterName, chapterDesc, callback, isEditState = false, isChecked = false, onSelectChange, onUpdate }: ChapterCardProps) {
+    const [editOpen, setEditOpen] = useState(false)
+    const [draft, setDraft] = useState({ chapterName, chapterDesc })
+    const firstInputRef = useRef<HTMLInputElement>(null)
+
+    const openEdit = () => {
+        setDraft({ chapterName, chapterDesc })
+        setEditOpen(true)
+    }
+
+    const handleEditSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!draft.chapterName.trim()) return
+        updateChapter({ bookId, chapterId, chapterName: draft.chapterName.trim(), chapterDesc: draft.chapterDesc.trim() })
+            .then(() => {
+                onUpdate && onUpdate({ bookId, chapterId, chapterName: draft.chapterName.trim(), chapterDesc: draft.chapterDesc.trim(), createTime: 0, update: Date.now() })
+                setEditOpen(false)
+            })
+    }
+
     return (
         <div className="group bg-surface rounded-2xl p-5 shadow-[0_2px_10px_rgba(29,43,41,0.04)] border border-app-border hover:shadow-[0_12px_28px_rgba(26,188,156,0.14)] hover:border-[#1ABC9C]/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-5 w-full cursor-pointer">
             {isEditState &&
@@ -40,6 +72,8 @@ export default function ChapterCard({ chapterId, chapterName, chapterDesc, callb
                     </PopoverTrigger>
                     <PopoverContent className="w-fit py-[6px] px-0">
                         <ul>
+                            <li className='cursor-pointer px-[10px] py-1 hover:bg-theme hover:text-[#fff]'
+                                onClick={openEdit}>{$t('edit_btn')}</li>
                             <li className='cursor-pointer px-[10px] py-1 text-red-500 hover:bg-red-500 hover:text-[#fff]'
                             onClick={() => callback && callback(chapterId)}>{$t('delete_btn')}</li>
                         </ul>
@@ -47,6 +81,32 @@ export default function ChapterCard({ chapterId, chapterName, chapterDesc, callb
                 </Popover>
             </div>
 
+            <Dialog open={editOpen} onOpenChange={setEditOpen}>
+                <DialogContent>
+                    <DialogTitle></DialogTitle>
+                    <DialogDescription></DialogDescription>
+                    <form onSubmit={handleEditSubmit}>
+                        <div className='flex items-center mt-[20px]'>
+                            <label>{$t('book_chapter.title')}</label>
+                            <Input ref={firstInputRef} value={draft.chapterName} onChange={(e) =>
+                                setDraft((prev) => ({ ...prev, chapterName: e.target.value }))
+                            } className='flex-1 ml-[15px]' placeholder={$t('book_chapter.title')} />
+                        </div>
+                        <div className='flex items-center mt-[20px]'>
+                            <label>{$t('book_chapter.desc')}</label>
+                            <Input value={draft.chapterDesc} onChange={(e) =>
+                                setDraft((prev) => ({ ...prev, chapterDesc: e.target.value }))
+                            } className='flex-1 ml-[15px]' placeholder={$t('book_chapter.desc')} />
+                        </div>
+                        <div className='flex justify-end mt-[20px]'>
+                            <DialogClose asChild>
+                                <Button type="button">{$t('common.close')}</Button>
+                            </DialogClose>
+                            <Button className='ml-[20px]' disabled={!draft.chapterName.trim()} type='submit'>{$t('common.save')}</Button>
+                        </div>
+                    </form>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };

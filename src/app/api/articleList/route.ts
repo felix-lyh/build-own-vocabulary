@@ -64,16 +64,14 @@ export async function PUT(req: NextRequest) {
 // delete 
 export async function DELETE(req: NextRequest) {
     try {
-        const query:{id?:string;idList?:string[]} = await req.json(); // 解析 JSON 資料
-        const { id,idList} = query;
-        const db = await getDbPool();
-        if(!!id){
-            await db.articleList.deleteOne({id})
+        const query:{articleIdList?:string[]} = await req.json(); // 解析 JSON 資料
+        const { articleIdList } = query;
+        if(!!articleIdList?.length){
+            const db = await getDbPool();
+            await db.articleList.deleteMany({ articleId: { $in: articleIdList }});
+            await db.article.deleteMany({ articleId: { $in: articleIdList }});
         }
-        if(!!idList){
-            await db.articleList.deleteMany({ id: { $in: idList }});
-        }
-        return NextResponse.json({ message: 'vocabulary delete successfully' }, { status: 200 });
+        return NextResponse.json({ message: 'article delete successfully' }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
     }

@@ -45,3 +45,18 @@ export const updateArticle = ({articleId,content}:UpsertAreticleType)=>{
         data: { articleId,content }
     });
 }
+
+export const deleteArticle = (articleId:string)=>{
+    return request({
+        url: `/api/articleList/${articleId}`,
+        method: 'delete'
+    });
+}
+
+export const deleteArticleList = (articleIdList:string[])=>{
+    return request({
+        url: '/api/articleList',
+        method: 'delete',
+        data: { articleIdList }
+    });
+}

@@ -35,6 +35,11 @@ export async function POST(req: NextRequest) {
     try {
         const query = await req.json(); // 解析 JSON 資料
         const { bookId, chapterId, vocabulary, translations, definitions = [], examples, SourceWeb = '', XPath } = query as VocabularyDataType;
+        const db = await getDbPool();
+        const existingVocabulary = await db.vocabulary.findOne({ vocabulary });
+        if (existingVocabulary) {
+            return NextResponse.json({ payload: existingVocabulary, message: 'vocabulary saved successfully' }, { status: 200 });
+        }
         const createTime = Date.now();
         const insertData: VocabularyDataType = {
             bookId,
@@ -50,7 +55,6 @@ export async function POST(req: NextRequest) {
             SourceWeb,
             XPath
         }
-        const db = await getDbPool();
         await db.vocabulary.insertOne(insertData)
         return NextResponse.json({ payload: insertData, message: 'vocabulary saved successfully' }, { status: 200 });
     } catch (error) {

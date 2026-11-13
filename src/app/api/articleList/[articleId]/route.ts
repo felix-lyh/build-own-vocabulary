@@ -6,11 +6,13 @@ import type { AreticleType,UpsertAreticleType } from '@/type/article'
 // export const revalidate = 0;
 // const collectionName = 'article'
 // const db.article = db[collectionName]
-export async function GET(req: NextRequest) {
+type RouteContext = {
+    params: Promise<{ articleId: string }>;
+};
+
+export async function GET(_req: NextRequest, { params }: RouteContext) {
     try {
-        const { searchParams } = new URL(req.url);
-        const articleId = searchParams.get('articleId');
-        
+        const { articleId } = await params;
         if (!articleId) {
             return NextResponse.json({ error: 'Missing articleId parameter' }, { status: 400 });
         }
@@ -58,15 +60,15 @@ export async function PUT(req: NextRequest) {
     }
 }
 // delete 
-export async function DELETE(req: NextRequest) {
+export async function DELETE(_req: NextRequest, { params }: RouteContext) {
     try {
-        const query:{articleId?:string} = await req.json(); // 解析 JSON 資料
-        const { articleId } = query;
-        if(!!articleId){
+        const { articleId } = await params;
+        if (!!articleId) {
             const db = await getDbPool();
-            await db.article.deleteOne({articleId})
+            await db.article.deleteOne({ articleId })
+            await db.articleList.deleteOne({ articleId })
         }
-        return NextResponse.json({ message: 'vocabulary delete successfully' }, { status: 200 });
+        return NextResponse.json({ message: 'article delete successfully' }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
     }

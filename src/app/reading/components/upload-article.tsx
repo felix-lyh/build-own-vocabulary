@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -18,48 +18,40 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import SvgIcon from '@/icons/svg-icon';
 import { toast } from "sonner"
-import { addArticle } from '@/request/article';
+import { addArticle, updateArticle } from '@/request/article';
 import { useParams } from 'next/navigation';
 interface PropType {
     dialogVisible: boolean,
     callbackData: Function,
-    handleDialogVisible: Function
+    handleDialogVisible: Function,
+    initialContent?: string
 }
-export default function upsertArticleItem({ dialogVisible, callbackData, handleDialogVisible }: PropType) {
+export default function upsertArticleItem({ dialogVisible, callbackData, handleDialogVisible, initialContent = '' }: PropType) {
     const params = useParams()
     const articleId = params.articleId as string
     const [content, setContent] = useState<string>('')
     const [uploadType, setUploadType] = useState<'manual' | 'file'>('manual')
-    const [uploading, setUploading] = useState(false)
     const inputRef = useRef<HTMLInputElement | null>(null)
+    useEffect(() => {
+        if (dialogVisible) {
+            setContent(initialContent)
+            setUploadType('manual')
+        }
+    }, [dialogVisible, initialContent])
     const handleFileClick = () => {
         inputRef.current?.click()
     }
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (!file) return
-        setUploading(true)
 
         try {
-            const ext = file.name.split('.').pop()?.toLowerCase()
-            if (ext === 'txt') {
-                const text = await file.text()
-                // For simple text files, create article via existing JSON API
-
-            } else {
-                // For non-text files, upload as FormData to a dedicated upload endpoint
-                const form = new FormData()
-                form.append('file', file)
-
-                // const res = await fetch('/api/article/upload', { method: 'POST', body: form })
-                // if (!res.ok) {
-                //     throw new Error(`Upload failed ${res.status}`)
-                // }
-            }
+            const text = await file.text()
+            setContent(text)
+            setUploadType('manual')
         } catch (err: any) {
             toast.error(err?.message || 'Upload failed')
         } finally {
-            // setUploading(false)
             // reset input so same file can be selected again
             if (inputRef.current) inputRef.current.value = ''
         }
@@ -67,10 +59,11 @@ export default function upsertArticleItem({ dialogVisible, callbackData, handleD
     const handleSubmit = (event: any) => {
         if (!content) return
         event.preventDefault();
-        addArticle({articleId,content}).then(()=>{
+        const req = initialContent ? updateArticle({ articleId, content }) : addArticle({ articleId, content })
+        req.then(() => {
             callbackData(content)
             handleDialogVisible(false)
-        }).catch(err=>{
+        }).catch(err => {
 
         })
     }
@@ -78,7 +71,7 @@ export default function upsertArticleItem({ dialogVisible, callbackData, handleD
     return (
         <Dialog open={dialogVisible} onOpenChange={(value) => handleDialogVisible(value)}>
             <DialogContent className='max-w-[80%]' onPointerDownOutside={(event)=>event.preventDefault()}>
-                <DialogTitle></DialogTitle>
+                <DialogTitle>{$t('upload_article')}</DialogTitle>
                 <DialogDescription></DialogDescription>
                 <form onSubmit={handleSubmit}>
                     <Select defaultValue={uploadType} value={uploadType} onValueChange={(v: 'manual' | 'file') => setUploadType(v)}>
@@ -100,7 +93,7 @@ export default function upsertArticleItem({ dialogVisible, callbackData, handleD
                             <h3 className="text-headline-lg font-headline-lg text-on-surface mb-2">{$t('upload_article')}</h3>
                             <p className="text-on-surface-variant text-label-md font-label-md">{$t('upload_article.desc')}</p>
                         </div>
-                        <input ref={inputRef} onChange={handleFileChange} type="file" name='upload-input' accept=".txt,.doc,.docx" className='hidden' />
+                        <input ref={inputRef} onChange={handleFileChange} type="file" name='upload-input' accept=".txt" className='hidden' />
                     </div>}
                     {uploadType === 'manual' && <Textarea rows={8} value={content} onChange={(e: any) =>
                         setContent(e.target.value )

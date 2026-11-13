@@ -14,6 +14,21 @@ import { Checkbox } from '@/components/ui/checkbox';
 import AlertDialogTemplate from '@/components/alert-dialog-template';
 import type { BookChapterType } from '@/type/chapter'
 import { useRouter } from 'next/navigation'
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+
+type SortOption = { label: string; sort: string; sortBy: string }
+const SORT_OPTIONS: SortOption[] = [
+    { label: '创建时间 ↓', sort: 'createTime', sortBy: '-1' },
+    { label: '创建时间 ↑', sort: 'createTime', sortBy: '1' },
+    { label: '名称 A→Z', sort: 'chapterName', sortBy: '1' },
+    { label: '名称 Z→A', sort: 'chapterName', sortBy: '-1' },
+    { label: '更新时间 ↓', sort: 'update', sortBy: '-1' },
+    { label: '更新时间 ↑', sort: 'update', sortBy: '1' },
+]
 export default function Page() {
     const params = useParams()
     const bookId = params.bookId as string
@@ -23,21 +38,28 @@ export default function Page() {
     const [selectedChapterIds, setSelectedChapterIds] = useState<string[]>([])
     const [pendingDeleteIds, setPendingDeleteIds] = useState<string[]>([])
     const [isEditState, setIsEditState] = useState(false)
-    const chapterDialogCallback = (data: BookChapterType) => {
-        setChapterList((pre: BookChapterType[]) => {
-            return [data, ...pre]
-        })
-    }
-    const getChapterList = ()=>{
-        getChapters({ bookId, limit: 0, page: 1 }).then((res: any) => {
+    const [currentSort, setCurrentSort] = useState<SortOption>(SORT_OPTIONS[0])
+
+    const getChapterList = (sort = currentSort) => {
+        getChapters({ bookId, limit: 0, page: 1, sort: sort.sort, sortBy: sort.sortBy }).then((res: any) => {
             setChapterList(res?.payload || [])
         }).catch((err) => {
 
         })
     }
+    const handleSortChange = (option: SortOption) => {
+        setCurrentSort(option)
+        getChapterList(option)
+    }
+    const chapterDialogCallback = () => {
+        getChapterList()
+    }
     const handleDelChapter = (chapterId:string)=>{
         if (!chapterId) return
         setPendingDeleteIds([chapterId])
+    }
+    const handleUpdateChapter = () => {
+        getChapterList()
     }
     const handleSelectChapter = (chapterId: string, checked: boolean) => {
         setSelectedChapterIds(pre => checked ? [...pre, chapterId] : pre.filter(id => id !== chapterId))
@@ -86,6 +108,25 @@ export default function Page() {
                             <span className='ml-2'>{$t('practice')}</span>
                         </Link>
                         {chapterList.length > 0 &&
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <span className='flex items-center cursor-pointer bg-surface border border-[#1ABC9C]/50 text-accent-strong rounded-lg h-fit py-[7px] px-3 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
+                                        <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#0E8C74" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18M3 12h12M3 18h6"/></svg>
+                                        <span className='ml-2 text-xs'>{currentSort.label}</span>
+                                    </span>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-fit py-[6px] px-0">
+                                    <ul>
+                                        {SORT_OPTIONS.map(opt => (
+                                            <li key={opt.label}
+                                                className={`cursor-pointer px-[12px] py-1 text-sm ${currentSort.label === opt.label ? 'text-[#1ABC9C] bg-[#1ABC9C]/10' : 'hover:bg-theme hover:text-[#fff]'}`}
+                                                onClick={() => handleSortChange(opt)}>{opt.label}</li>
+                                        ))}
+                                    </ul>
+                                </PopoverContent>
+                            </Popover>
+                        }
+                        {chapterList.length > 0 &&
                             <span onClick={toggleEditState} className='flex items-center cursor-pointer bg-surface border border-[#1ABC9C]/50 text-accent-strong rounded-lg h-fit py-[7px] px-3 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
                                 <SvgIcon width={16} height={16} name='edit' color='#0E8C74'></SvgIcon>
                                 <span className='ml-2'>{isEditState ? $t('complete_btn') : $t('edit_btn')}</span>
@@ -115,7 +156,8 @@ export default function Page() {
                                 <ChapterCard {...chapter} callback = {handleDelChapter}
                                     isEditState={isEditState}
                                     isChecked={selectedChapterIds.includes(chapter.chapterId)}
-                                    onSelectChange={handleSelectChapter}/>
+                                    onSelectChange={handleSelectChapter}
+                                    onUpdate={handleUpdateChapter}/>
                             </li>
                         })
                     }

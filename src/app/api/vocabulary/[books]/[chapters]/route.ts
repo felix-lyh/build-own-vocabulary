@@ -11,8 +11,8 @@ export const revalidate = 0;
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     // console.log('searchParams',searchParams)
-    const { page,limit,bookId } = Object.fromEntries(searchParams.entries());
-    const options = { page,limit }
+    const { page,limit,bookId,sort,sortBy } = Object.fromEntries(searchParams.entries());
+    const options = { page,limit,sort,sortBy }
     const query = { bookId }
     try {
         const db = await getDbPool();

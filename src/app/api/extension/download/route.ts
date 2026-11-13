@@ -2,7 +2,9 @@
 import fs from 'fs';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
-const ZIP_PATH = path.join(process.cwd(), 'extension-dist', 'dist.zip');
+// const ZIP_PATH = path.join(process.cwd(), 'extension-dist', 'dist.zip');
+const ZIP_PATH = "/app/extension-dist/dist.zip"
+
 console.log('ZIP_PATH',ZIP_PATH)
 export async function GET(req: NextRequest) {
     // const { searchParams } = new URL(req.url);
