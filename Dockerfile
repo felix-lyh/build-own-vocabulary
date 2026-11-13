@@ -9,6 +9,8 @@ RUN npm install
 
 COPY . .
 
+RUN rm -rf .next node_modules/.cache
+
 RUN npm run build
 
 EXPOSE 3000
