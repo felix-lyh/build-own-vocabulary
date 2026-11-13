@@ -61,7 +61,7 @@ export default function ChapterCard({ bookId, chapterId, chapterName, chapterDes
         <div className="group bg-surface rounded-2xl p-5 shadow-[0_2px_10px_rgba(29,43,41,0.04)] border border-app-border hover:shadow-[0_12px_28px_rgba(26,188,156,0.14)] hover:border-[#1ABC9C]/30 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-5 w-full cursor-pointer" onClick={handleCardClick}>
             {isEditState &&
                 <span className="shrink-0" onClick={(e) => e.stopPropagation()}>
-                    <Checkbox checked={isChecked} onCheckedChange={(checked) => { e.stopPropagation(); onSelectChange && onSelectChange(chapterId, checked === true); }} />
+                    <Checkbox checked={isChecked} onCheckedChange={(checked) => { onSelectChange && onSelectChange(chapterId, checked === true); }} />
                 </span>
             }
             <div className="shrink-0 rounded-2xl w-12 h-12 bg-gradient-to-br from-accent-soft to-accent-soft/60 flex items-center justify-center group-hover:from-[#1ABC9C] group-hover:to-[#0E8C74] transition-all duration-300">
