@@ -67,7 +67,7 @@ export const addChapter = ({ bookId,chapterName,chapterDesc }:UpsertChapterType)
     });
 };
 
-export const updateChapter = ({ bookId, chapterId, chapterName, chapterDesc }: BookChapterType) => {
+export const updateChapter = ({ bookId, chapterId, chapterName, chapterDesc }: Pick<BookChapterType, 'bookId' | 'chapterId' | 'chapterName' | 'chapterDesc'>) => {
     return request({
         url: `/api/vocabulary/books/chapter`,
         method: 'put',
