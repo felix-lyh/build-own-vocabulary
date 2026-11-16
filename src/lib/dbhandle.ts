@@ -1,10 +1,10 @@
-import type { Collection,Document} from 'mongodb';
+import type { Collection,Document,CollationOptions} from 'mongodb';
 interface PaginateOptions {
     page?: number|string;
     limit?: number|string;
     sort?: string;
     sortBy?: string;
-    collation?: Record<string, unknown>;
+    collation?: CollationOptions;
 }
 
 interface PaginateResult {
