@@ -19,14 +19,14 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 
-type SortOption = { label: string; sort: string; sortBy: string }
+type SortOption = { id: string; key: string; sort: string; sortBy: string }
 const SORT_OPTIONS: SortOption[] = [
-    { label: '创建时间 ↓', sort: 'createTime', sortBy: '-1' },
-    { label: '创建时间 ↑', sort: 'createTime', sortBy: '1' },
-    { label: '名称 A→Z', sort: 'chapterName', sortBy: '1' },
-    { label: '名称 Z→A', sort: 'chapterName', sortBy: '-1' },
-    { label: '更新时间 ↓', sort: 'update', sortBy: '-1' },
-    { label: '更新时间 ↑', sort: 'update', sortBy: '1' },
+    { id: 'name_asc', key: 'sort.name_asc', sort: 'chapterName', sortBy: '1' },
+    { id: 'name_desc', key: 'sort.name_desc', sort: 'chapterName', sortBy: '-1' },
+    { id: 'create_desc', key: 'sort.create_desc', sort: 'createTime', sortBy: '-1' },
+    { id: 'create_asc', key: 'sort.create_asc', sort: 'createTime', sortBy: '1' },
+    { id: 'update_desc', key: 'sort.update_desc', sort: 'update', sortBy: '-1' },
+    { id: 'update_asc', key: 'sort.update_asc', sort: 'update', sortBy: '1' },
 ]
 export default function Page() {
     const params = useParams()
@@ -110,15 +110,15 @@ export default function Page() {
                                 <PopoverTrigger asChild>
                                     <span className='flex items-center cursor-pointer bg-surface border border-[#1ABC9C]/50 text-accent-strong rounded-lg h-fit py-[7px] px-3 text-sm font-medium shadow-sm hover:bg-[#E6F6F4] hover:border-[#1ABC9C] active:scale-95 transition-all'>
                                         <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#0E8C74" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18M3 12h12M3 18h6"/></svg>
-                                        <span className='ml-2 text-xs'>{currentSort.label}</span>
+                                        <span className='ml-2 text-xs'>{$t(currentSort.key)}</span>
                                     </span>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-fit py-[6px] px-0">
                                     <ul>
                                         {SORT_OPTIONS.map(opt => (
-                                            <li key={opt.label}
-                                                className={`cursor-pointer px-[12px] py-1 text-sm ${currentSort.label === opt.label ? 'text-[#1ABC9C] bg-[#1ABC9C]/10' : 'hover:bg-theme hover:text-[#fff]'}`}
-                                                onClick={() => handleSortChange(opt)}>{opt.label}</li>
+                                            <li key={opt.id}
+                                                className={`cursor-pointer px-[12px] py-1 text-sm ${currentSort.id === opt.id ? 'text-[#1ABC9C] bg-[#1ABC9C]/10' : 'hover:bg-theme hover:text-[#fff]'}`}
+                                                onClick={() => handleSortChange(opt)}>{$t(opt.key)}</li>
                                         ))}
                                     </ul>
                                 </PopoverContent>

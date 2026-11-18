@@ -91,7 +91,6 @@
     "add_article":"新增文章",
     "add_article.name":"文章名称",
     "add_article.desc":"文章描述",
-    "add_article.content":"文章内容",
     "add_article.file_type":"选择上传文件方式",
     "upload_type.manual_input":"手动上传",
     "upload_type.file_input":"上传文件",
@@ -139,9 +138,6 @@
     "login.password_ph":"请输入密码",
     "login_btn":"登录",
 
-    "chapter.delete_alert_title":"是否确认删除章节？",
-    "chapter.delete_alert_desc":"此操作无法撤销。这将永久删除章节及其下的所有词汇。",
-
     "add_works.btn":"新增作品",
     "add_works.name":"作品名称",
     "add_works.name_ph":"请输入作品名称",
@@ -170,5 +166,12 @@
     "definitions_count":"条释义",
     "no_definitions":"暂无释义",
     "no_definitions_hint":"可点击上方「+ 添加释义」按钮添加",
-    "add_definition":"添加释义"
+    "add_definition":"添加释义",
+    "look_up_dictionary":"查词典",
+    "sort.name_asc": "名称 A→Z",
+    "sort.name_desc": "名称 Z→A",
+    "sort.create_desc": "创建时间 ↓",
+    "sort.create_asc": "创建时间 ↑",
+    "sort.update_desc": "更新时间 ↓",
+    "sort.update_asc": "更新时间 ↑"
 }

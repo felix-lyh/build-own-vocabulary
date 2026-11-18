@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react'
+import { BookOpen } from 'lucide-react'
 import type { VocabularyDataType } from '@/type/vocabulary'
 import PlayVoice from "@/components/play-voice";
 import SvgIcon from "@/icons/svg-icon";
@@ -85,7 +86,19 @@ export default function VocabularyCard(props: PropType) {
             exitWin.focus();
         }
     }
-
+    const [exitDictWin, setExitDictWin] = useState<Window | null>(null)
+    const lookUpDict = () => {
+        const url = `https://www.oxfordlearnersdictionaries.com/definition/english/${props.vocabulary}`
+        if (!exitDictWin || exitDictWin.closed) {
+            setExitDictWin(window.open(
+                url,
+                'oxfordDictWindow'
+            ));
+        } else {
+            exitDictWin.location.href = url;
+            // exitDictWin.focus();
+        }
+    }
     return (
         <>
             <div className="w-full sm:w-[47%] lg:w-[30%] min-w-0 bg-surface rounded-2xl border border-app-border shadow-[0_2px_10px_rgba(29,43,41,0.04)] p-4 sm:p-5 overflow-hidden hover:shadow-[0_12px_28px_rgba(26,188,156,0.14)] hover:border-[#1ABC9C]/30 hover:-translate-y-0.5 transition-all duration-300">
@@ -184,12 +197,15 @@ export default function VocabularyCard(props: PropType) {
                 </div>
 
                 {/* footer: More button */}
-                <div className='mt-3 pt-2.5 border-t border-app-border/50 flex justify-end'>
+                <div className='mt-3 pt-2.5 border-t border-app-border/50 flex justify-between items-center gap-2 text-app-fg-muted text-[12px]'>
+                    <span className='flex items-center gap-1 text-theme hover:text-white cursor-pointer' title={$t('look_up_dictionary')} onClick={lookUpDict} >
+                        <BookOpen size={25} strokeWidth={2} aria-hidden="true" />
+                    </span>
                     <button
                         onClick={() => setDetailOpen(true)}
                         className={cn(
                             "inline-flex items-center gap-1 text-[12px] font-medium rounded-full px-3 py-1.5 transition-colors",
-                            "text-[#1ABC9C] bg-[#1ABC9C]/10 hover:bg-[#1ABC9C] hover:text-white"
+                            "text-theme bg-theme/10 hover:bg-theme hover:text-white"
                         )}
                     >
                         {$t('vocabulary_detail')}

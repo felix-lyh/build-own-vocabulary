@@ -9,6 +9,17 @@ const nextConfig: NextConfig = {
             },
         ];
     },
+    // Since the extension not spport http,so I set a proxy to forward the request to the backend server.
+    async rewrites() {
+        if (process.env.NODE_ENV !== 'development') return [];
+
+        return [
+            {
+                source: '/api/:path*',
+                destination: 'http://120.79.241.153/api/:path*',
+            },
+        ];
+    },
     typescript: {
         ignoreBuildErrors: false,
     },

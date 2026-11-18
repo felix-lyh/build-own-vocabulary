@@ -27,14 +27,12 @@ export async function paginate(
     query: Document = {},
 ): Promise<PaginateResult> {
     const { page = 1, limit = 0, sort = 'createTime', sortBy = '-1', collation } = options;
-    console.log('[paginate] options:', options, '→ effective sort:', sort, 'sortBy:', sortBy);
     let pageSize = Number(page)
     let pageLimit = Number(limit)
     const skip = (pageSize - 1) * pageLimit;
     let cursor = collectionName.find(query)
     if (collation) cursor = cursor.collation(collation)
     cursor = cursor.sort({ [sort]: sortBy === '-1' ? -1 : 1 });
-    console.log('[paginate] MongoDB sort spec:', { [sort]: sortBy === '-1' ? -1 : 1 });
     if (pageLimit > 0) {
         cursor.skip(skip).limit(pageLimit);
     }

@@ -70,7 +70,7 @@ export default function upsertArticleItem({ dialogVisible, callbackData, handleD
 
     return (
         <Dialog open={dialogVisible} onOpenChange={(value) => handleDialogVisible(value)}>
-            <DialogContent className='max-w-[80%]' onPointerDownOutside={(event)=>event.preventDefault()}>
+            <DialogContent className='max-w-[80%]'>
                 <DialogTitle>{$t('upload_article')}</DialogTitle>
                 <DialogDescription></DialogDescription>
                 <form onSubmit={handleSubmit}>
